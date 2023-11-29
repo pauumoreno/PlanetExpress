@@ -110,21 +110,11 @@ public class Utilidades {
         int mes;
         int anio;
         do {
-            System.out.print(mensaje);
-
-            System.out.print("Ingrese el año: ");
-            anio = teclado.nextInt();
-
-            System.out.print("Ingrese el mes (1-12): ");
-            mes = teclado.nextInt();
-
-            System.out.print("Ingrese el día: ");
-            dia = teclado.nextInt();
-
+            System.out.println(mensaje);
+            dia = leerNumero(teclado,"Ingrese el día: ",1,31);
+            mes = leerNumero(teclado,"Ingrese el mes: ",1,12);
+            anio = leerNumero(teclado,"Ingrese el año: ",1900,3000);
         } while (!Fecha.comprobarFecha(dia, mes, anio));
-
-
-
         return new Fecha(dia, mes, anio);
     }
 
@@ -142,9 +132,15 @@ public class Utilidades {
         int hora;
         int minuto;
         int segundo;
-
-
-
+        do{
+            System.out.println(mensaje);
+            dia = leerNumero(teclado,"Ingrese el día: ",1,31);
+            mes = leerNumero(teclado,"Ingrese el mes: ",1,12);
+            anio = leerNumero(teclado,"Ingrese el año: ",1900,3000);
+            hora = leerNumero(teclado,"Ingrese la hora: ",0,23);
+            minuto = leerNumero(teclado,"Ingrese el minuto: ",0,59);
+            segundo = leerNumero(teclado,"Ingrese el segundo: ",0,59);
+        }while (!Fecha.comprobarFecha(dia,mes,anio)||!Fecha.comprobarHora(hora,minuto,segundo));
         return new Fecha(dia, mes, anio, hora, minuto, segundo);
     }
 
@@ -155,7 +151,7 @@ public class Utilidades {
      * @return
      */
     public static String leerCadena(Scanner teclado, String s) {
-        System.out.print(s);
+        System.out.println(s);
         return teclado.next();
     }
 }

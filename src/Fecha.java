@@ -178,7 +178,7 @@ public class Fecha {
         //Eventos sin hora
         if (hora < 0)
             evento = String.format("%02d/%02d/%04d", dia, mes, anio);
-            //Eventos con hora
+        //Eventos con hora
         else
             evento = String.format("%02d/%02d/%04d %02d:%02d:%02d", dia, mes, anio, hora, minuto, segundo);
         return evento;
