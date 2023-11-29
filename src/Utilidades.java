@@ -18,9 +18,16 @@ public class Utilidades {
      * @return int numero
      */
     public static int leerNumero(Scanner teclado, String mensaje, int minimo, int maximo) {
-        int numero;
-
-
+        int numero=0;
+        boolean correcto = false;
+        do {
+            System.out.print(mensaje);
+            if (teclado.hasNextInt()) {
+                numero = teclado.nextInt();
+                correcto = numero >= minimo && numero <= maximo;
+            }
+            teclado.nextLine();
+        } while (!correcto);
         return numero;
     }
 
@@ -33,9 +40,16 @@ public class Utilidades {
      * @return long numero
      */
     public static long leerNumero(Scanner teclado, String mensaje, long minimo, long maximo) {
-        long numero;
-
-
+        long numero=0;
+        boolean correcto = false;
+        do {
+            System.out.print(mensaje);
+            if (teclado.hasNextLong()) {
+                numero = teclado.nextLong();
+                correcto = numero >= minimo && numero <= maximo;
+            }
+            teclado.nextLine();
+        } while (!correcto);
         return numero;
     }
 
@@ -48,13 +62,21 @@ public class Utilidades {
      * @return double numero
      */
     public static double leerNumero(Scanner teclado, String mensaje, double minimo, double maximo) {
-        double numero;
-
+        double numero=0;
+        boolean correcto = false;
+        do {
+            System.out.print(mensaje);
+            if (teclado.hasNextDouble()) {
+                numero = teclado.nextDouble();
+                correcto = numero >= minimo && numero <= maximo;
+            }
+            teclado.nextLine();
+        } while (!correcto);
         return numero;
     }
 
     /**
-     * TODO: TODO: Solicita una letra repetidamente hasta que se introduzca uno correcto (dentro de los límites)
+     * TODO: Solicita una letra repetidamente hasta que se introduzca uno correcto (dentro de los límites)
      * @param teclado
      * @param mensaje
      * @param minimo
@@ -62,10 +84,17 @@ public class Utilidades {
      * @return char letra
      */
     public static char leerLetra(Scanner teclado, String mensaje, char minimo, char maximo) {
-        char letra;
-
-
-
+        char letra=0;
+        boolean correcto = false;
+        do {
+            System.out.print(mensaje);
+            String entrada = teclado.next();
+            if (entrada.length() == 1 && Character.isLetter(entrada.charAt(0))) {
+                letra = entrada.charAt(0);
+                correcto = letra >= minimo && letra <= maximo;
+            }
+            teclado.nextLine();
+        } while (!correcto);
         return letra;
     }
 
@@ -80,6 +109,19 @@ public class Utilidades {
         int dia;
         int mes;
         int anio;
+        do {
+            System.out.print(mensaje);
+
+            System.out.print("Ingrese el año: ");
+            anio = teclado.nextInt();
+
+            System.out.print("Ingrese el mes (1-12): ");
+            mes = teclado.nextInt();
+
+            System.out.print("Ingrese el día: ");
+            dia = teclado.nextInt();
+
+        } while (!Fecha.comprobarFecha(dia, mes, anio));
 
 
 
