@@ -3,8 +3,8 @@ import java.util.Scanner;
 /**
  * Description of the class
  *
- * @author
- * @author
+ * @author PAULA CAMILA MORENO RUBIO
+ * @author DMYTRO KRYVITSKYY ROMANYUK
  * @version     1.0
  */
 public class Utilidades {
