@@ -4,7 +4,7 @@ import java.util.Scanner;
  * Clase principal de Planet Express App, la práctica de Taller de Programación
  *
  * @author      Taller de Progamación
- * @version     1.0
+ * @version     1.0.0.1
  */
 public class PlanetExpress {
     private final int maxPortes;
