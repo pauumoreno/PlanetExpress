@@ -6,8 +6,8 @@ import java.util.Scanner;
 /**
  * Description of the class
  *
- * @author
- * @author
+ * @author PAULA CAMILA MORENO RUBIO
+ * @author DMYTRO KRYVITSKYY ROMANYUK
  * @version     1.0
  */
 public class Envio {
@@ -54,6 +54,7 @@ public class Envio {
     }
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
     public String getHueco() {
+
         return "";
     }
     public double getPrecio() {
@@ -61,7 +62,7 @@ public class Envio {
     }
     //TODO: Texto que debe generar: Envío PM1111AAAABBBBC para Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05) en hueco 6C por 13424,56 SSD
     public String toString() {
-
+        return "Envío "+localizador+" para Porte "+porte.getID()+" de "+porte.getOrigen()+" "+porte.getMuelleOrigen()+" "+porte.getSalida()+" a "+porte.getDestino()+" "+porte.getMuelleDestino()+" "+porte.getLlegada()+" en hueco "+getHueco()+" por "+precio+" SSD";
     }
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
     public boolean cancelar() {
@@ -86,15 +87,18 @@ public class Envio {
      *     Precio: 13424,56 SSD
      */
     public boolean generarFactura(String fichero) {
-        try {
-
-
-
-
-
-
-
-
+        try (PrintWriter factura=new PrintWriter(fichero)) {
+            factura.println("-----------------------------------------------------");
+            factura.println("--------- Factura del envío "+localizador+" ---------");
+            factura.println("-----------------------------------------------------");
+            factura.println("Porte: "+porte.getID());
+            factura.println("Origen: "+porte.getOrigen()+" "+porte.getMuelleOrigen());
+            factura.println("Destino: "+porte.getDestino()+" "+porte.getMuelleDestino());
+            factura.println("Salida: "+porte.getSalida());
+            factura.println("Llegada: "+porte.getLlegada());
+            factura.println("Cliente: "+cliente.toString());
+            factura.println("Hueco: "+getHueco());
+            factura.println("Precio: "+getPrecio());
             return true;
         } catch (FileNotFoundException e) {
             return false;
@@ -113,9 +117,11 @@ public class Envio {
      */
     public static String generarLocalizador(Random rand, String idPorte) {
         StringBuilder localizador = new StringBuilder(idPorte);
-
-
-
+        char letraAleatoria;
+        for (int i=0; i<9;i++){
+            letraAleatoria= (char) ('A'+rand.nextInt(26));
+            localizador.append(letraAleatoria);
+        }
         return localizador.toString();
     }
 
