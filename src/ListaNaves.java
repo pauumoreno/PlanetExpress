@@ -7,10 +7,16 @@ import java.util.Scanner;
  * @author
  * @author
  * @version     1.0
+ *
+ *
  */
+
+
+
 public class ListaNaves {
     private Nave[] naves;
-
+    //
+    private int ocupacion;
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
@@ -18,19 +24,34 @@ public class ListaNaves {
      */
     public ListaNaves(int capacidad) {
 
+        //
+        naves = new Nave[capacidad];
+
 
 
     }
     // TODO: Devuelve el número de naves que hay en la lista
     public int getOcupacion() {
+        //
+        return naves.length;
 
     }
     // TODO: ¿Está llena la lista de naves?
     public boolean estaLlena() {
 
+        //
+
+        return(ocupacion<naves.length);
+
     }
     // TODO: Devuelve nave dado un indice
     public Nave getNave(int posicion) {
+       Nave res= null;
+
+        if (naves[posicion]!=null){
+             res = naves[posicion];
+        }
+
         return null;
     }
 
@@ -41,6 +62,9 @@ public class ListaNaves {
      */
     public boolean insertarNave(Nave nave) {
 
+       //Ver foto
+
+
 
         return false;
     }
@@ -50,6 +74,7 @@ public class ListaNaves {
      * @return la nave que encontramos o null si no existe
      */
     public Nave buscarNave(String matricula) {
+
 
         return null;
     }
