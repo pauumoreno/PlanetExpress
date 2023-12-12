@@ -8,7 +8,7 @@ import java.util.Scanner;
  *
  * @author PAULA CAMILA MORENO RUBIO
  * @author DMYTRO KRYVITSKYY ROMANYUK
- * @version     1.0
+ * @version     1.0.1
  */
 public class Envio {
 
@@ -54,8 +54,8 @@ public class Envio {
     }
     // TODO: Ejemplos: "1A" para el hueco con fila 1 y columna 1, "3D" para el hueco con fila 3 y columna 4
     public String getHueco() {
-
-        return "";
+        final String[] abecedario = {" ","A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        return abecedario[columna];
     }
     public double getPrecio() {
         return precio;
@@ -64,9 +64,12 @@ public class Envio {
     public String toString() {
         return "Envío "+localizador+" para Porte "+porte.getID()+" de "+porte.getOrigen()+" "+porte.getMuelleOrigen()+" "+porte.getSalida()+" a "+porte.getDestino()+" "+porte.getMuelleDestino()+" "+porte.getLlegada()+" en hueco "+getHueco()+" por "+precio+" SSD";
     }
+
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
     public boolean cancelar() {
+        do{
 
+        }
     }
 
     /**

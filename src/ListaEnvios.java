@@ -9,7 +9,7 @@ import java.util.Scanner;
  *
  * @author
  * @author
- * @version     1.0
+ * @version     1.0.1
  */
 public class ListaEnvios {
     private Envio[] envios;
@@ -21,6 +21,13 @@ public class ListaEnvios {
     public ListaEnvios(int capacidad) {
 
 
+    }
+    public int posicionEnvio(String localizador){
+        for (int i =0; i<getOcupacion();i++){
+            if (localizador.equals(envios[i].getLocalizador())){
+
+            }
+        }
     }
     // TODO: Devuelve el número de envíos que hay en la lista
     public int getOcupacion() {
