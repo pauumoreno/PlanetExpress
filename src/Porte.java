@@ -6,11 +6,16 @@ import java.util.Scanner;
 /**
  * Description of the class
  *
- * @author
- * @author
+ * @author PAULA CAMILA MORENO RUBIO
+ * @author DMYTRO KRYVITSKYY ROMANYUK
  * @version     1.0
  */
 public class Porte {
+
+    private int capacidad;
+    private int ocupacion;
+
+
     private boolean[][] huecos;
     private String id;
     private Nave nave;
@@ -22,6 +27,9 @@ public class Porte {
     private Fecha llegada;
     private double precio;
     private ListaEnvios listaEnvios;
+
+
+
 
     /**
      * TODO: Completa el constructo de la clase
@@ -37,6 +45,27 @@ public class Porte {
      * @param precio
      */
     public Porte(String id, Nave nave, PuertoEspacial origen, int muelleOrigen, Fecha salida, PuertoEspacial destino, int muelleDestino, Fecha llegada, double precio) {
+
+        this.id = id;
+        this.nave = nave;
+        this.origen = origen;
+        this.muelleOrigen = muelleOrigen;
+        this.salida = salida;
+        this.destino = destino;
+        this.muelleDestino = muelleDestino;
+        this.llegada = llegada;
+        this.precio = precio;
+
+        double alcance = nave.getAlcance();
+        double distancia = origen.distancia(destino);
+
+        // Ver que hacer si el alcance es menor que la distancia
+
+        ocupacion = 0;
+        capacidad = nave.getFilas()* nave.getColumnas();
+
+
+
 
     }
     public String getID() {
@@ -68,6 +97,8 @@ public class Porte {
     }
     // TODO: Devuelve el número de huecos libres que hay en el porte
     public int numHuecosLibres() {
+
+        return
 
     }
     // TODO: ¿Están llenos todos los huecos?
