@@ -8,7 +8,7 @@ import java.util.Scanner;
  *
  * @author PAULA CAMILA MORENO RUBIO
  * @author DMYTRO KRYVITSKYY ROMANYUK
- * @version     1.0.1
+ * @version     1.0.2
  */
 public class Envio {
 
@@ -67,9 +67,7 @@ public class Envio {
 
     // TODO: Cancela este envío, eliminándolo de la lista de envíos del porte y del cliente correspondiente
     public boolean cancelar() {
-        do{
-
-        }
+        return cliente.cancelarEnvio(localizador) && porte.desocuparHueco(localizador);
     }
 
     /**
@@ -140,9 +138,22 @@ public class Envio {
      * @return Envio para el porte y cliente especificados
      */
     public static Envio altaEnvio(Scanner teclado, Random rand, Porte porte, Cliente cliente) {
-
-
-
-        return ;
+        int fila=0;
+        int columna=0;
+        int precio=0;
+        if (porte.porteLleno()){
+            System.out.println("El porte seleccionado está lleno");
+        } else{
+            System.out.println("A continuacion se mostrarán los huecos libres del porte para que elija un hueco vacío:");
+            porte.imprimirMatrizHuecos();
+            do{
+                fila = Utilidades.leerNumero(teclado,"Fila del hueco: ",1,26);
+                columna = Utilidades.leerNumero(teclado, "Columna del hueco: ",1,26);
+            }while (porte.huecoOcupado(fila,columna));
+            precio = Utilidades.leerNumero(teclado,"Precio del envío: ",0,100000);
+        }
+        Envio nuevoEnvio = new Envio(generarLocalizador(rand,porte.getID()),porte,cliente,fila,columna,precio);
+        porte.ocuparHueco(nuevoEnvio);
+        return nuevoEnvio;
     }
 }
