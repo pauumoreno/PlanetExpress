@@ -4,7 +4,7 @@ import java.util.Scanner;
  * Description of the class
  *
  * @author Taller de Programación
- * @version     1.0
+ * @version     1.0.1
  */
 public class Cliente {
     private final ListaEnvios listaEnvios;
@@ -37,29 +37,29 @@ public class Cliente {
     }
     // TODO: Texto que debe generar: Zapp Brannigan, zapp.brannigan@dop.gov
     public String toString() {
-
+        return nombre+" "+apellidos+", "+email;
     }
     // TODO: Devuelve un booleano que indica si se ha alcanzado el número máximo de envíos
     public boolean maxEnviosAlcanzado() {
-
+        return listaEnvios.estaLlena();
     }
     // TODO: Devuelve un envío en función de su posición
     public Envio getEnvio(int i) {
-
+        return listaEnvios.getEnvio(i);
     }
     public ListaEnvios getListaEnvios() {
         return listaEnvios;
     }
     // TODO: Añade un envío al cliente
     public boolean aniadirEnvio(Envio envio) {
-
+        return listaEnvios.insertarEnvio(envio);
     }
     public Envio buscarEnvio(String localizador) {
         return listaEnvios.buscarEnvio(localizador);
     }
     // TODO: Elimina el envío de la lista de envíos del pasajero
     public boolean cancelarEnvio(String localizador) {
-
+        return listaEnvios.eliminarEnvio(localizador);
     }
     public void listarEnvios() {
         listaEnvios.listarEnvios();

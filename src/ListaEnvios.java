@@ -22,13 +22,6 @@ public class ListaEnvios {
 
 
     }
-    public int posicionEnvio(String localizador){
-        for (int i =0; i<getOcupacion();i++){
-            if (localizador.equals(envios[i].getLocalizador())){
-
-            }
-        }
-    }
     // TODO: Devuelve el número de envíos que hay en la lista
     public int getOcupacion() {
 
@@ -49,6 +42,7 @@ public class ListaEnvios {
      */
     public boolean insertarEnvio(Envio envio) {
 
+        //NO OLVIDAR: añadir el envio al csv con el metodo aniadirEnviosCsv
         return false;
     }
 

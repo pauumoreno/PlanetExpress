@@ -8,7 +8,7 @@ import java.util.Scanner;
  *
  * @author PAULA CAMILA MORENO RUBIO
  * @author DMYTRO KRYVITSKYY ROMANYUK
- * @version     1.0.2
+ * @version     1.0.3
  */
 public class Envio {
 
@@ -135,25 +135,30 @@ public class Envio {
      * @param rand
      * @param porte
      * @param cliente
-     * @return Envio para el porte y cliente especificados
+     * @return Envio para el porte y cliente especificados (podría hacer return de un null)
      */
     public static Envio altaEnvio(Scanner teclado, Random rand, Porte porte, Cliente cliente) {
         int fila=0;
         int columna=0;
-        int precio=0;
+        double precio=0;
+        Envio nuevoEnvio=null;
         if (porte.porteLleno()){
             System.out.println("El porte seleccionado está lleno");
         } else{
-            System.out.println("A continuacion se mostrarán los huecos libres del porte para que elija un hueco vacío:");
-            porte.imprimirMatrizHuecos();
-            do{
-                fila = Utilidades.leerNumero(teclado,"Fila del hueco: ",1,26);
-                columna = Utilidades.leerNumero(teclado, "Columna del hueco: ",1,26);
-            }while (porte.huecoOcupado(fila,columna));
-            precio = Utilidades.leerNumero(teclado,"Precio del envío: ",0,100000);
+            do {
+                System.out.println("A continuación se mostrarán los huecos libres del porte para que elija un hueco vacío:");
+                porte.imprimirMatrizHuecos();
+                fila = Utilidades.leerNumero(teclado, "Fila del hueco: ", 1, 26);
+                columna = Utilidades.leerNumero(teclado, "Columna del hueco: ", 1, 26);
+                precio = Utilidades.leerNumero(teclado, "Precio del envío (mínimo " + porte.getPrecio() + " SSD): ", porte.getPrecio(), 100000000.00);
+                nuevoEnvio = new Envio(generarLocalizador(rand, porte.getID()), porte, cliente, fila, columna, precio);
+                if (porte.ocuparHueco(nuevoEnvio)) {  //el metodo ocuparHueco lee si esta desocupado el hueco
+                    System.out.println("Envío " + nuevoEnvio.getLocalizador() + " creado correctamente");
+                } else {
+                    System.out.println("El hueco seleccionado esta ocupado.");
+                }
+            }while (!porte.ocuparHueco(nuevoEnvio));
         }
-        Envio nuevoEnvio = new Envio(generarLocalizador(rand,porte.getID()),porte,cliente,fila,columna,precio);
-        porte.ocuparHueco(nuevoEnvio);
         return nuevoEnvio;
     }
 }
