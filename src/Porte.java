@@ -12,9 +12,6 @@ import java.util.Scanner;
  */
 public class Porte {
 
-    private int capacidad;
-    private int ocupacion;
-
 
     private boolean[][] huecos;
     private String id;
@@ -49,20 +46,21 @@ public class Porte {
         this.id = id;
         this.nave = nave;
         this.origen = origen;
-        this.muelleOrigen = muelleOrigen;
-        this.salida = salida;
         this.destino = destino;
+        this.muelleOrigen = muelleOrigen;
         this.muelleDestino = muelleDestino;
+        this.salida = salida;
         this.llegada = llegada;
         this.precio = precio;
 
-        double alcance = nave.getAlcance();
-        double distancia = origen.distancia(destino);
+        listaEnvios = new ListaEnvios(nave.getFilas()*nave.getColumnas());
+        huecos = new boolean[nave.getFilas()+1][nave.getColumnas()+1];
 
-        // Ver que hacer si el alcance es menor que la distancia
 
-        ocupacion = 0;
-        capacidad = nave.getFilas()* nave.getColumnas();
+
+
+
+
 
 
 
@@ -98,15 +96,27 @@ public class Porte {
     // TODO: Devuelve el número de huecos libres que hay en el porte
     public int numHuecosLibres() {
 
-        return
+        int huecosLibres = 0;
+        for(int i=0;i<nave.getFilas();i++){
+            for(int j=0;j< nave.getColumnas();j++){
+                if(!huecos[i][j]){
+                    huecosLibres++;
+                }
+            }
+        }
+        return huecosLibres;
 
     }
     // TODO: ¿Están llenos todos los huecos?
     public boolean porteLleno() {
 
+        return numHuecosLibres()==0;
+
     }
     // TODO: ¿Está ocupado el hueco consultado?
     public boolean huecoOcupado(int fila, int columna) {
+
+        return huecos [fila][columna];
 
     }
     public Envio buscarEnvio(String localizador) {
@@ -122,7 +132,13 @@ public class Porte {
      */
     public Envio buscarEnvio(int fila, int columna) {
 
-        return null;
+        if(fila>nave.getFilas()+1 || columna>nave.getColumnas()+1 || !huecoOcupado(fila-1, columna-1)){
+            return null;
+        }
+        else {
+            return listaEnvios.buscarEnvio(id,fila,columna);
+        }
+
     }
 
 
