@@ -4,7 +4,7 @@ import java.util.Scanner;
  * Description of the class
  *
  * @author Taller de Programación
- * @version     1.0.1
+ * @version     1.0.2
  */
 public class Cliente {
     private final ListaEnvios listaEnvios;
@@ -80,21 +80,54 @@ public class Cliente {
      * @return Cliente
      */
     public static Cliente altaCliente(Scanner teclado, ListaClientes clientes, int maxEnvios) {
-
-
-
-
-        return new Cliente(nombre, apellidos, email, maxEnvios);
+        String nombre = null;
+        String apellidos = null;
+        String email = null;
+        Cliente nuevoCliente = null;
+        boolean repetido = false;
+        if (clientes.estaLlena()){
+            System.out.println("No se pueden dar de alta más clientes.");
+        }else {
+            do {
+                nombre = Utilidades.leerCadena(teclado, "Nombre: ");
+                apellidos = Utilidades.leerCadena(teclado, "Apellidos: ");
+                do {
+                    email = Utilidades.leerCadena(teclado, "Email: ");
+                } while (!correctoEmail(email));
+                nuevoCliente = new Cliente(nombre, apellidos, email, maxEnvios);
+                if (clientes.buscarClienteEmail(email)==null){
+                    System.out.println("Cliente con email " + email + " creado correctamente");
+                    clientes.insertarCliente(nuevoCliente);
+                }else{
+                    System.out.println("Ya existe un cliente con este email");
+                    repetido=true;
+                }
+            }while (repetido);
+        }
+        return nuevoCliente;
     }
 
 
     /**
      * TODO: Metodo para comprobar que el formato de email introducido sea correcto
      * @param email
-     * @return
+     * @return boolean
      */
     public static boolean correctoEmail(String email) {
-        return false;
+        String [] partesCorreo = email.split("@");
+        boolean correcto = true;
+        if (partesCorreo.length!=2){
+            correcto = false;
+        }else {
+            String parteIzquierda = partesCorreo[0];
+            String parteDerecha = partesCorreo[1];
+            if (!parteIzquierda.matches("[a-z0-9_.]+")){
+                correcto=false;
+            }
+            if (!(parteDerecha.equals("upm.es") || parteDerecha.equals("alumnos.upm.es"))) {
+                correcto = false;
+            }
+        }
+        return correcto;
     }
 }
-

@@ -36,6 +36,7 @@ public class ListaClientes {
     }
     // TODO: Inserta el cliente en la lista de clientes
     public boolean insertarCliente(Cliente cliente) {
+        //insertar el cliente en el csv con escribirClientesCsv(String fichero)
 
     }
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
