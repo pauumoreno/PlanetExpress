@@ -150,7 +150,15 @@ public class Porte {
      */
     public boolean ocuparHueco(Envio envio) {
 
-        return false;
+        boolean desocupado = true;
+
+        if(!huecoOcupado(envio.getFila()-1,envio.getColumna()-1)){
+            huecos[envio.getFila()-1][envio.getColumna()-1]=true;
+            listaEnvios.insertarEnvio(envio);
+        }else desocupado = false;
+
+        return desocupado;
+
     }
 
 
@@ -161,7 +169,13 @@ public class Porte {
      */
     public boolean desocuparHueco(String localizador) {
 
-        return false;
+        boolean ocupado = true;
+        if(huecos[buscarEnvio(localizador).getFila()-1][buscarEnvio(localizador).getColumna()-1]){
+
+            huecos[buscarEnvio(localizador).getFila()-1][buscarEnvio(localizador).getColumna()-1] = false;
+            listaEnvios.eliminarEnvio(localizador);
+        }else ocupado = false;
+        return ocupado;
     }
 
     /**
@@ -170,7 +184,11 @@ public class Porte {
      *  Cidonia(CID) M1 (01/01/2024 11:00:05) en Planet Express One(EP-245732X) por 13424,56 SSD, huecos libres: 10"
      */
     public String toString() {
-        return "";
+
+        return "Porte "+id+" de "+origen.toStringSimple()+" M"+muelleOrigen+" ("+salida.toString()+") a "+
+                destino.toStringSimple()+" M"+muelleDestino+" ("+llegada.toString()+") en"+
+                nave.toStringSimple()+" por "+String.format("%.2f",precio)+ " SSD, huecos libres: "+
+                numHuecosLibres();
     }
 
 
@@ -179,7 +197,9 @@ public class Porte {
      * @return ejemplo del formato -> "Porte PM0066 de GGT M5 (01/01/2023 08:15:00) a CID M1 (01/01/2024 11:00:05)"
      */
     public String toStringSimple() {
-        return "";
+
+        return "Porte "+id+" de "+origen.getCodigo()+" M"+muelleOrigen+" ("+salida.toString()+") a "+
+                destino.getCodigo()+" M"+muelleDestino+" ("+llegada.toString()+")";
     }
 
 
@@ -191,7 +211,11 @@ public class Porte {
      * @return
      */
     public boolean coincide(String codigoOrigen, String codigoDestino, Fecha fecha) {
-        return ;
+        boolean igual;
+        if(origen.getCodigo().equals(codigoOrigen) && destino.getCodigo().equals(codigoDestino) && fecha.coincide(salida)){
+          igual = true;
+        }else igual = false;
+        return igual;
     }
 
 
@@ -205,9 +229,46 @@ public class Porte {
      *     10[ ][ ][ ]
      */
     public void imprimirMatrizHuecos() {
-        System.out.print("  ");
+        switch(nave.getColumnas()){
+            case 1:
+                System.out.println("  A"); break;
+            case 2:
+                System.out.println("  A  B");break;
+            case 3:
+                System.out.println("  A  B  C");break;
+            case 4:
+                System.out.println("  A  B  C  D");break;
+            case 5:
+                System.out.println("  A  B  C  D  E");break;
+            case 6:
+                System.out.println("  A  B  C  D  E  F");break;
+            case 7:
+                System.out.println("  A  B  C  D  E  F  G");break;
+            case 8:
+                System.out.println("  A  B  C  D  E  F  G  H");break;
+            case 9:
+                System.out.println("  A  B  C  D  E  F  G  H  I");break;
+            case 10:
+                System.out.println("  A  B  C  D  E  F  G  H  I  J");break;
+
+        }
+
+      char ocupado;
+        for (int i= 0; i<nave.getFilas();i++){
+            System.out.print(i+1);
+            for(int j=0;j<nave.getColumnas();j++){
+                if(huecoOcupado(i,j)){
+                    ocupado= 'X';
+                }else ocupado =' ';
+                System.out.print("["+ocupado+"]");
+            }
+            System.out.println();
+        }
 
     }
+
+
+
 
     /**
      * TODO: Devuelve true si ha podido escribir en un fichero la lista de envíos del porte, siguiendo las indicaciones
@@ -218,7 +279,22 @@ public class Porte {
     public boolean generarListaEnvios(String fichero) {
         PrintWriter pw = null;
         try {
-
+            pw = new PrintWriter(fichero);
+            pw.println("--------------------------------------------------");
+            pw.println("-------- Lista de envíos del porte "+id+" --------");
+            pw.println("--------------------------------------------------");
+            pw.println(String.format("%-8"+"%-15","Hueco","Cliente"));
+            for(int i = 1;i<nave.getFilas()+1;i++){
+                for(int j = 1;j<nave.getColumnas()+1;j++){
+                    Envio envio = buscarEnvio(i,j);
+                    pw.print(String.format("%s%-7s",i,(char) (j+64)));
+                    if (envio == null) {
+                        pw.println();
+                    } else {
+                        pw.println(String.format("%-15s", envio.getCliente().toString()));
+                    }
+                }
+            }
             return true;
         } catch (FileNotFoundException e) {
             return false;
@@ -234,7 +310,7 @@ public class Porte {
      * @return ejemplo -> "PM0123"
      */
     public static String generarID(Random rand) {
-        return "PM";
+        return "PM"+ rand.nextInt(9)+rand.nextInt(9)+rand.nextInt(9)+rand.nextInt(9);
     }
 
     /**
@@ -253,7 +329,52 @@ public class Porte {
                                   ListaPuertosEspaciales puertosEspaciales,
                                   ListaNaves naves,
                                   ListaPortes portes) {
+        int muelleOrigen,muelleDestino;
+        double precio;
+        PuertoEspacial origen;
+        PuertoEspacial destino;
+        Nave nave;
+        Fecha salida;
+        Fecha llegada;
 
-        return null;
+
+        origen = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Origen: ");
+
+
+        muelleOrigen=Utilidades.leerNumero(teclado,"Ingrese el muelle de  Origen (1-"+origen.getMuelles()+"): ",1,origen.getMuelles());
+
+
+        destino = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de Puerto Destino: ");
+
+
+        muelleDestino=Utilidades.leerNumero(teclado,"Ingrese puerto Destino (1-"+destino.getMuelles()+"): ",1,destino.getMuelles());
+
+
+        nave = naves.seleccionarNave(teclado, "Ingrese matrícula de la nave: ", origen.distancia(destino));
+
+
+        do {
+            salida = Utilidades.leerFechaHora(teclado, "Introduzca la fecha de salida: ");
+            llegada = Utilidades.leerFechaHora(teclado, "Introduzca fecha de llegada: ");
+            if(llegada.anterior(salida)|| llegada.coincide(salida)){
+                System.out.println("Llegada debe ser posterior a salida.");
+            }
+        }while(llegada.anterior(salida)||llegada.coincide(salida));
+
+
+        precio = Utilidades.leerNumero(teclado,"Ingrese precio de porte: ",0.0,9999.0);
+
+        Porte porte = new Porte(generarID(rand),nave,origen,muelleOrigen,salida,destino,muelleDestino,llegada,precio);
+
+        System.out.println("Porte "+porte.getID()+" creado con éxito.");
+
+        return porte;
+
+
+
+
+
+
+       // return null;   PREGUNTAR SI SE PUEDE QUITAR
     }
 }
