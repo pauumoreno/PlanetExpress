@@ -151,7 +151,7 @@ public class Utilidades {
      * @return
      */
     public static String leerCadena(Scanner teclado, String s) {
-        System.out.println(s);
+        System.out.print(s);
         return teclado.next();
     }
 }

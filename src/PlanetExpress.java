@@ -1,3 +1,7 @@
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
 /**
@@ -42,9 +46,11 @@ public class PlanetExpress {
      * @param ficheroEnvios
      */
     public void cargarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
-
-
-
+        listaPuertosEspaciales = ListaPuertosEspaciales.leerPuertosEspacialesCsv(ficheroPuertos,maxPuertosEspaciales);
+        listaNaves = ListaNaves.leerNavesCsv(ficheroNaves,maxNaves);
+        listaPortes = ListaPortes.leerPortesCsv(ficheroPortes,maxPortes,listaPuertosEspaciales,listaNaves);
+        listaClientes = ListaClientes.leerClientesCsv(ficheroClientes,maxClientes,maxEnviosPorCliente);
+        ListaEnvios.leerEnviosCsv(ficheroEnvios,listaPortes,listaClientes);
     }
     /**
      * TODO: Metodo para almacenar los datos de PlanetExpress en los ficheros .csv especificados
@@ -56,10 +62,35 @@ public class PlanetExpress {
      * @param ficheroEnvios
      */
     public void guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
-
-
-
+        PrintWriter pw = null;
+        boolean correcto = true;
+        try {
+            pw=new PrintWriter(new FileWriter(ficheroEnvios));
+            pw.print("");
+        } catch (FileNotFoundException e) {
+            System.out.println("Fichero "+ficheroEnvios+" no encontrado");
+            correcto = false;
+        } catch (IOException e) {
+            System.out.println("Error de escritura en fichero "+ficheroEnvios);
+            correcto = false;
+        } finally {
+            try {
+                if (pw != null) {
+                    pw.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Error de cierre de fichero "+ficheroEnvios);
+            }
+        }
+        for(int i = 0;i<listaPortes.getOcupacion();i++){
+            listaPortes.getPorte(i).generarListaEnvios(ficheroEnvios);
+        }
+        listaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
+        listaNaves.escribirNavesCsv(ficheroNaves);
+        listaPortes.escribirPortesCsv(ficheroPortes);
+        listaClientes.escribirClientesCsv(ficheroClientes);
     }
+
     public boolean maxPortesAlcanzado() {
         return listaPortes.estaLlena();
     }
@@ -81,10 +112,10 @@ public class PlanetExpress {
      * @param teclado
      * @return
      */
-    public ListaPortes buscarPorte(Scanner teclado) {
-
-
-
+    public ListaPortes buscarPorte(Scanner teclado) { //REVISAR
+        String codigoOrigen = Utilidades.leerCadena(teclado,"Ingrese código de puerto Origen: ");
+        String codigoDestino = Utilidades.leerCadena(teclado,"Ingrese código de puerto Destino: ");
+        Fecha fecha = Utilidades.leerFecha(teclado, "Fecha de Salida: ");
         return listaPortes.buscarPortes(codigoOrigen, codigoDestino, fecha);
     }
 
@@ -98,12 +129,58 @@ public class PlanetExpress {
      * @param rand
      * @param porte
      */
-    public void contratarEnvio(Scanner teclado, Random rand, Porte porte) {
+    public void contratarEnvio(Scanner teclado, Random rand, Porte porte) { //REVISAR
+        char letra;
+        boolean opcionCorrecta = false;
+        String email;
+        Cliente cliente;
+        Envio nuevoEnvio = null;
+        boolean emailCorrecto = false;
         if (porte != null) {
-
-
-
-
+            do {
+                letra = Utilidades.leerLetra(teclado, "¿Comprar billete para un nuevo pasajero (n), o para uno ya existente (e)?", 'a', 'z');
+                if (letra == 'n' || letra == 'e') {
+                    opcionCorrecta = true;
+                }else{
+                    System.out.println("El valor de entrada debe ser 'n' o 'e'");
+                }
+            }while (!opcionCorrecta);
+            if (letra=='n'){
+                if(maxClientesAlcanzado()){
+                    System.out.println("No se pueden añadir más clientes");
+                }else{
+                    cliente = Cliente.altaCliente(teclado,listaClientes,maxEnviosPorCliente);
+                    insertarCliente(cliente);
+                    nuevoEnvio = Envio.altaEnvio(teclado,rand,porte,cliente);
+                    porte.ocuparHueco(nuevoEnvio);
+                    cliente.aniadirEnvio(nuevoEnvio);
+                }
+            }
+            if (letra=='e'){
+                if (listaClientes.getOcupacion()==0){
+                    System.out.println("No existen pasajeros en la lista, se procederá a crear uno nuevo");
+                    cliente = Cliente.altaCliente(teclado,listaClientes,maxEnviosPorCliente);
+                    insertarCliente(cliente);
+                    nuevoEnvio = Envio.altaEnvio(teclado,rand,porte,cliente);
+                    porte.ocuparHueco(nuevoEnvio);
+                    cliente.aniadirEnvio(nuevoEnvio);
+                }else {
+                    do {
+                        email = Utilidades.leerCadena(teclado, "Email del cliente: ");
+                        cliente = listaClientes.buscarClienteEmail(email);
+                        if (cliente != null) {
+                            emailCorrecto=true;
+                        }
+                    } while (!emailCorrecto);
+                    if (cliente.maxEnviosAlcanzado()){
+                        System.out.println("El cliente seleccionado ha alcanzado el límite de envíos");
+                    }else{
+                        nuevoEnvio = Envio.altaEnvio(teclado, rand, porte, cliente);
+                        porte.ocuparHueco(nuevoEnvio);
+                        cliente.aniadirEnvio(nuevoEnvio);
+                    }
+                }
+            }
         }
     }
     /**
@@ -113,6 +190,8 @@ public class PlanetExpress {
      * @return opción seleccionada
      */
     public static int menu(Scanner teclado) {
+        System.out.println("1. Alta de Porte\n2. Alta de Cliente\n3. Buscar Porte\n4. Mostrar envíos de un cliente\n5. Generar lista de envíos\n0. Salir");
+        return Utilidades.leerNumero(teclado,"Seleccione opción: ",0,5);
 
     }
 
@@ -137,34 +216,37 @@ public class PlanetExpress {
     public static void main(String[] args) {
         if (args.length != 10) {
             System.out.println("Número de argumentos incorrecto");
-            return;
+        }else {
+            PlanetExpress planetExpress = new PlanetExpress(Integer.parseInt(args[0]),Integer.parseInt(args[1]),
+                    Integer.parseInt(args[2]),Integer.parseInt(args[3]),Integer.parseInt(args[4]));
+            planetExpress.cargarDatos(args[5],args[6],args[7],args[8],args[9]);
+            Scanner teclado = new Scanner(System.in);
+            Random rand = new Random();
+            int opcion;
+            do {
+                opcion = menu(teclado);
+                switch (opcion) {
+                    case 1:     // TODO: Alta de Porte
+
+
+                        break;
+                    case 2:     // TODO: Alta de Cliente
+
+
+                        break;
+                    case 3:     // TODO: Buscar Porte
+
+
+                        break;
+                    case 4:     // TODO: Listado de envíos de un cliente
+
+                        break;
+                    case 5:     // TODO: Lista de envíos de un porte
+
+
+                        break;
+                }
+            } while (opcion != 0);
         }
-
-
-        do {
-            opcion = menu(teclado);
-            switch (opcion) {
-                case 1:     // TODO: Alta de Porte
-
-
-                    break;
-                case 2:     // TODO: Alta de Cliente
-
-
-                    break;
-                case 3:     // TODO: Buscar Porte
-
-
-                    break;
-                case 4:     // TODO: Listado de envíos de un cliente
-
-                    break;
-                case 5:     // TODO: Lista de envíos de un porte
-
-
-                    break;
-            }
-        } while (opcion != 0);
-
     }
 }
