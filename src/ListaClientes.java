@@ -18,29 +18,57 @@ public class ListaClientes {
      * @param capacidad
      */
     public ListaClientes(int capacidad) {
+        clientes = new Cliente[capacidad];
 
 
 
     }
     // TODO: Devuelve el número de clientes que hay en la lista de clientes
     public int getOcupacion() {
+        int ocupados=0;
+        for (int i=0; i<clientes.length;i++){
+            if (getCliente(i)!=null){
+                ocupados++;
+            }
+        }
+        return ocupados;
 
     }
     // TODO: ¿Está llena la lista de clientes?
     public boolean estaLlena() {
+        return clientes.length<=getOcupacion();
 
     }
     // TODO: Devuelve el cliente dada el indice
     public Cliente getCliente(int i) {
-        return null;
+        return clientes[i];
     }
     // TODO: Inserta el cliente en la lista de clientes
     public boolean insertarCliente(Cliente cliente) {
         //insertar el cliente en el csv con escribirClientesCsv(String fichero)
+        if(estaLlena()){
+            return false;
+        }else{
+            clientes[getOcupacion()]=cliente;
+            return true;
+        }
 
     }
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
     public Cliente buscarClienteEmail(String email) {
+        int j = 0;
+        int salida = 0;
+        for(int i=0;i<getOcupacion();i++){
+            if(email.equals(getCliente(i).getEmail())){
+                j = i;
+                salida = 1;
+            }
+        }
+        if (salida == 1) {
+            return getCliente(j);
+        } else {
+            return null;
+        }
 
     }
 
