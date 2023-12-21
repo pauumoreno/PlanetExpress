@@ -72,15 +72,15 @@ public class ListaNaves {
      */
     public Nave buscarNave(String matricula) {
 
-        int k= 0;
+        int salir= 0;
         int j = 0;
         for(int i=0;i<getOcupacion();i++){
             if(matricula.equals(getNave(i).getMatricula())){
-                k = 1;
+                salir = 1;
                 j = i;
             }
         }
-            if (k == 1) {
+            if (salir == 1) {
             return getNave(j);
             } else return null;
 
@@ -88,7 +88,7 @@ public class ListaNaves {
     // TODO: Muestra por pantalla las naves de la lista con el formato indicado en el enunciado
     public void mostrarNaves() {
         for(int i=0;i<naves.length;i++){
-            getNave(i);
+            System.out.println(getNave(i).toString());;
         }
 
     }
