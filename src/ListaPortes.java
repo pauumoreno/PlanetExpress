@@ -121,7 +121,7 @@ public class ListaPortes {
         boolean correcto=false;
         do {
             id = Utilidades.leerCadena(teclado, mensaje);
-            if (id.equals(cancelar)) {
+            if (id.equalsIgnoreCase(cancelar)) {
                 correcto=true;
             } else {
                 for (int i = 0; i < getOcupacion(); i++) {

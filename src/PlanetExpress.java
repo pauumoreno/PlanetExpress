@@ -216,6 +216,7 @@ public class PlanetExpress {
     public static void main(String[] args) {
         if (args.length != 10) {
             System.out.println("Número de argumentos incorrecto");
+            //return;
         }else {
             PlanetExpress planetExpress = new PlanetExpress(Integer.parseInt(args[0]),Integer.parseInt(args[1]),
                     Integer.parseInt(args[2]),Integer.parseInt(args[3]),Integer.parseInt(args[4]));
@@ -228,25 +229,54 @@ public class PlanetExpress {
                 switch (opcion) {
                     case 1:     // TODO: Alta de Porte
 
+                        if(planetExpress.maxPortesAlcanzado())
+                            System.out.println("Maximo numero de portes alcanzado");
+                        else{
+                            planetExpress.insertarPorte(Porte.altaPorte(teclado, rand,planetExpress.listaPuertosEspaciales,
+                                    planetExpress.listaNaves,planetExpress.listaPortes));
+                        }
 
                         break;
                     case 2:     // TODO: Alta de Cliente
-
+                        if(planetExpress.maxClientesAlcanzado())
+                            System.out.println("Maximo numero de clientes alcanzado");
+                        else{
+                            planetExpress.insertarCliente(Cliente.altaCliente(teclado,planetExpress.listaClientes, planetExpress.maxEnviosPorCliente));
+                        }
 
                         break;
                     case 3:     // TODO: Buscar Porte
+                        ListaPortes portes = planetExpress.buscarPorte(teclado);
+                        if(portes!= null){
+                            portes.listarPortes();
+                            Porte porteId = portes.seleccionarPorte(teclado,"Seleccione un porte: ","cancelar" );
 
+                        if (porteId!= null)
+                            planetExpress.contratarEnvio(teclado, rand, porteId);
+
+
+                        }else System.out.println("Porte no encontrado");
 
                         break;
                     case 4:     // TODO: Listado de envíos de un cliente
 
+                        Cliente cliente = planetExpress.listaClientes.seleccionarCliente(teclado, "Email del cliente: ");
+
+
+
+
                         break;
                     case 5:     // TODO: Lista de envíos de un porte
-
+                       Porte porte = planetExpress.listaPortes.seleccionarPorte(teclado, "Seleccione un porte: ","cancelar");
+                        System.out.print("Nombre del fichero: ");
+                        String fichero = teclado.next();
+                        porte.generarListaEnvios(fichero);
+                        System.out.println("\t\tFichero creado correctamente");
 
                         break;
                 }
             } while (opcion != 0);
+            planetExpress.guardarDatos(args[5],args[6],args[7],args[8],args[9]);
         }
     }
 }
