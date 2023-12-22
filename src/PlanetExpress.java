@@ -242,6 +242,7 @@ public class PlanetExpress {
                             System.out.println("Maximo numero de clientes alcanzado");
                         else{
                             planetExpress.insertarCliente(Cliente.altaCliente(teclado,planetExpress.listaClientes, planetExpress.maxEnviosPorCliente));
+                            break;
                         }
 
                         break;
