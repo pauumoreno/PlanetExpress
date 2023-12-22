@@ -18,30 +18,30 @@ import java.util.Scanner;
 public class ListaNaves {
     private Nave[] naves;
     //
-    private int capacidad;
-    private int ocupacion;
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
      * @param capacidad
      */
     public ListaNaves(int capacidad) {
-
         naves = new Nave[capacidad];
-        this.capacidad= capacidad;
-        ocupacion =0;
 
     }
     // TODO: Devuelve el número de naves que hay en la lista
     public int getOcupacion() {
-
-        return ocupacion;
+        int ocupados=0;
+        for (int i=0; i<naves.length;i++){
+            if (getNave(i)!=null){
+                ocupados++;
+            }
+        }
+        return ocupados;
 
     }
     // TODO: ¿Está llena la lista de naves?
     public boolean estaLlena() {
 
-        return capacidad<=getOcupacion();
+        return naves.length<=getOcupacion();
 
     }
     // TODO: Devuelve nave dado un indice
@@ -60,7 +60,6 @@ public class ListaNaves {
             return false;
         else{
             naves[getOcupacion()]=nave;
-            ocupacion++;
             return true;
         }
 
@@ -71,19 +70,13 @@ public class ListaNaves {
      * @return la nave que encontramos o null si no existe
      */
     public Nave buscarNave(String matricula) {
-
-        int salir= 0;
-        int j = 0;
-        for(int i=0;i<getOcupacion();i++){
-            if(matricula.equals(getNave(i).getMatricula())){
-                salir = 1;
-                j = i;
+        Nave nave = null;
+        for (int i = 0; i<getOcupacion(); i++){
+            if (matricula.equals(getNave(i).getMatricula())){
+                nave = getNave(i);
             }
         }
-            if (salir == 1) {
-            return getNave(j);
-            } else return null;
-
+        return nave;
     }
     // TODO: Muestra por pantalla las naves de la lista con el formato indicado en el enunciado
     public void mostrarNaves() {
@@ -107,26 +100,27 @@ public class ListaNaves {
      */
     public Nave seleccionarNave(Scanner teclado, String mensaje, double alcance) {
         Nave nave = null;
-        boolean repetir = true;
+        boolean volver = true;
         String buscar;
         do {
             System.out.print(mensaje);
             buscar = teclado.nextLine();
+
             for(int i = 0;i<getOcupacion();i++){
                 if(buscar.equals(getNave(i).getMatricula())) {
                     nave = getNave(i);
-                    repetir = false;
+                    volver = false;
                 }
             }
             if (nave == null) {
                 System.out.println("Matrícula de nave no encontrada.");
-                repetir = true;
+                volver = true;
             }
             if (nave!= null && nave.getAlcance() < alcance) {
                 System.out.println("Nave seleccionada con alcance insuficiente. ");
-                repetir = true;
+                volver = true;
             }
-        } while (repetir==true);
+        } while (volver==true);
 
 
         return nave;
@@ -140,14 +134,38 @@ public class ListaNaves {
      */
     public boolean escribirNavesCsv(String nombre) {
         PrintWriter pw = null;
-        try {
+        Scanner sc= null;
+        boolean correcto= true;
 
-            return true;
+        try {
+            pw = new PrintWriter(nombre);
+            sc = new Scanner(new FileReader(nombre));
+            for (int i = 0; i < getOcupacion(); i++) {
+                pw.println(getNave(i).getMarca() + ";" + getNave(i).getModelo() + ";" + getNave(i).getMatricula() + ";"
+                        + getNave(i).getFilas() + ";" + getNave(i).getColumnas() + ";" + getNave(i).getAlcance());
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Fichero "+nombre+" no encontrado");
+            correcto = false;
         } catch (Exception e) {
-            return false;
+            System.out.println("Error en la escritura del fichero "+nombre);
+            correcto= false;
         } finally {
+            try {
+                if (pw != null) {
+                    pw.close();
+                }
+                if (sc != null) {
+                    sc.close();
+                }
+            } catch (Exception exc) {
+                System.out.println("Error de cierre de fichero "+nombre);
+                correcto = false;
+            }
 
         }
+        return correcto;
     }
 
 
@@ -166,23 +184,24 @@ public class ListaNaves {
                 String linea = sc.nextLine();
 
                 String[] info = linea.split(";", 6);
-                Nave nave = new Nave(info[0],info[1],info[2],Integer.parseInt(info[4]),
-                                     Integer.parseInt(info[3]), Double.parseDouble(info[5]));
+                Nave nave = new Nave(info[0],info[1],info[2],Integer.parseInt(info[3]),
+                                     Integer.parseInt(info[4]), Double.parseDouble(info[5]));
 
                 listaNaves.insertarNave(nave);
             }
-        } catch (FileNotFoundException ex) {
-            System.out.println("Fichero Naves no encontrado.");
+        } catch (FileNotFoundException e) {
+            System.out.println("Fichero "+fichero+" no encontrado.");
             return null;
         } catch (Exception e) {
-            System.out.println("Error en la lectura del fichero Naves");
+            System.out.println("Error en la lectura del fichero "+fichero);
             return null;
         } finally {try {
-            if (sc!= null) {
+
+            if (sc!= null)
                 sc.close();
-            }
-        } catch (Exception ex) {
-            System.out.println("Error de cierre del fichero");
+
+        } catch (Exception exc) {
+            System.out.println("Error de cierre del fichero" +fichero);
         }
 
         }

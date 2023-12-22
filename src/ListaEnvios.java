@@ -53,8 +53,6 @@ public class ListaEnvios {
             return false;
         } else{
             envios[getOcupacion()]=envio;
-            
-            //ocupacion++ aumenta la ocupacion 
             return true;
         }
     }
@@ -84,16 +82,16 @@ public class ListaEnvios {
      */
     public Envio buscarEnvio(String idPorte, int fila, int columna) {
         int j = 0;
-        int salida = 0;
+        int salir = 0;
         for(int i=0;i<getOcupacion();i++){
             if(idPorte.equals(getEnvio(i).getPorte().getID())){
                 if(fila==getEnvio(i).getFila() && columna==getEnvio(i).getColumna()){
-                    salida = 1;
+                    salir = 1;
                     j = i;
                 }
             }
         }
-        if (salida == 1) {
+        if (salir == 1) {
             return getEnvio(j);
         } else {
             return null;
@@ -238,15 +236,15 @@ public class ListaEnvios {
             sc = new Scanner(new FileReader(ficheroEnvios));
             while (sc.hasNext()) {
                 String linea = sc.nextLine();
-                String[] datos = linea.split(";", 6);
+                String[] info = linea.split(";", 6);
 
-                envio = new Envio(datos[0], portes.buscarPorte(datos[1]), clientes.buscarClienteEmail(datos[2]),
-                        Integer.parseInt(datos[3]), Integer.parseInt(datos[4]), Double.parseDouble(datos[5]));
+                envio = new Envio(info[0], portes.buscarPorte(info[1]), clientes.buscarClienteEmail(info[2]),
+                        Integer.parseInt(info[3]), Integer.parseInt(info[4]), Double.parseDouble(info[5]));
 
 
-                porte = portes.buscarPorte(datos[1]);
+                porte = portes.buscarPorte(info[1]);
                 porte.ocuparHueco(envio);
-                cliente = clientes.buscarClienteEmail(datos[2]);
+                cliente = clientes.buscarClienteEmail(info[2]);
                 cliente.aniadirEnvio(envio);
             }
 

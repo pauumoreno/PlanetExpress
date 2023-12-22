@@ -1,5 +1,8 @@
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.PrintWriter;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 /**
@@ -19,8 +22,6 @@ public class ListaClientes {
      */
     public ListaClientes(int capacidad) {
         clientes = new Cliente[capacidad];
-
-
 
     }
     // TODO: Devuelve el número de clientes que hay en la lista de clientes
@@ -56,19 +57,14 @@ public class ListaClientes {
     }
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
     public Cliente buscarClienteEmail(String email) {
-        int j = 0;
-        int salida = 0;
-        for(int i=0;i<getOcupacion();i++){
-            if(email.equals(getCliente(i).getEmail())){
-                j = i;
-                salida = 1;
+        Cliente cliente = null;
+        for (int i = 0; i<getOcupacion(); i++){
+            if (email.equals(getCliente(i).getEmail())){
+                 cliente = getCliente(i);
             }
         }
-        if (salida == 1) {
-            return getCliente(j);
-        } else {
-            return null;
-        }
+        return cliente;
+
 
     }
 
@@ -82,6 +78,21 @@ public class ListaClientes {
      */
     public Cliente seleccionarCliente(Scanner teclado, String mensaje) {
         Cliente cliente = null;
+        String email;
+        boolean correcto= false;
+        do {
+            email = Utilidades.leerCadena(teclado, mensaje);
+            for (int i = 0; i < getOcupacion(); i++) {
+                    if (email.equals(getCliente(i).getEmail())) {
+                        cliente = getCliente(i);
+                        correcto=true;
+                    }
+                }
+                if (cliente==null){
+                    System.out.println("Email no encontrado.");
+                }
+
+        }while(!correcto);
 
 
         return cliente;
@@ -94,18 +105,37 @@ public class ListaClientes {
      * @return
      */
     public boolean escribirClientesCsv(String fichero) {
-
+        PrintWriter pw = null;
+        boolean correcto = true;
 
         try {
+            pw = new PrintWriter(fichero);
 
-
+            for(int i = 0;i<getOcupacion();i++) {
+                pw.printf("%s;%s;%s%n",
+                        getCliente(i).getNombre(),
+                        getCliente(i).getApellidos(),
+                        getCliente(i).getEmail());
+            }
 
         } catch (FileNotFoundException e) {
-            return false;
-        } finally {
+            System.out.println("Fichero "+fichero+" no encontrado");
+            correcto = false;
+        } catch(Exception exc){
+            System.out.println("Error de escritura");
+            correcto= false;
+        }finally {
+            try{
+                if(pw!=null)
+                    pw.close();
+
+            }catch(Exception exc){
+                System.out.println("Error de cierre del fichero "+fichero);
+                correcto = false;
+            }
 
         }
-        return true;
+        return correcto;
     }
 
     /**
@@ -117,12 +147,31 @@ public class ListaClientes {
      * @return lista de clientes
      */
     public static ListaClientes leerClientesCsv(String fichero, int capacidad, int maxEnviosPorCliente) {
-
+        ListaClientes listaClientes = new ListaClientes(capacidad);
+        Scanner sc= null;
         try {
+            sc = new Scanner(new FileReader(fichero));
+            while (sc.hasNext()) {
+                String[] info = sc.nextLine().split(";");
+                //Probar a defirnirlo directamente en la clase
+                String nombre = info[0];
+                String apellidos = info[1];
+                String email = info[2];
+
+                listaClientes.insertarCliente(new Cliente(nombre,apellidos,email,maxEnviosPorCliente));
+                //listaClientes.insertarCliente(new Cliente(line[0],info[1],info[2],maxEnviosPorCliente));
+                }
 
         } catch (FileNotFoundException e) {
+            System.out.println("Fichero Clientes no encontrado");
             return null;
         } finally {
+            try{
+                if(sc!=null)
+                    sc.close();
+            }catch (Exception exc){
+                System.out.println("Error de cirre del fichero "+fichero);
+            }
 
         }
         return listaClientes;
