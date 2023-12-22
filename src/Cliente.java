@@ -85,7 +85,7 @@ public class Cliente {
         String email = null;
         Cliente nuevoCliente = null;
         boolean repetido = false;
-        if (clientes.estaLlena()){
+        if (clientes.estaLlena()){ //si la lista está llena se imprime el mensaje y devuelve nuevoCliente = null
             System.out.println("No se pueden dar de alta más clientes.");
         }else {
             do {
@@ -93,16 +93,16 @@ public class Cliente {
                 apellidos = Utilidades.leerCadena(teclado, "Apellidos: ");
                 do {
                     email = Utilidades.leerCadena(teclado, "Email: ");
-                } while (!correctoEmail(email));
-                nuevoCliente = new Cliente(nombre, apellidos, email, maxEnvios);
-                if (clientes.buscarClienteEmail(email)==null){
+                } while (!correctoEmail(email)); //se pide el nombre y apellidos y se hace un bucle para pedir el correo hasta que sea correcto
+                nuevoCliente = new Cliente(nombre, apellidos, email, maxEnvios); //cuando la informacion es correcta se crea al nuevo cliente
+                if (clientes.buscarClienteEmail(email)==null){ //si el cliente no está en el sistema entonces se inserta al nuevo cliente
                     System.out.println("Cliente con email " + email + " creado correctamente");
                     clientes.insertarCliente(nuevoCliente);
                 }else{
                     System.out.println("Ya existe un cliente con este email");
                     repetido=true;
                 }
-            }while (repetido);
+            }while (repetido); //se repite todo el proceso hasta que se introduzca un cliente que no esté registrado
         }
         return nuevoCliente;
     }
@@ -114,17 +114,17 @@ public class Cliente {
      * @return boolean
      */
     public static boolean correctoEmail(String email) {
-        String [] partesCorreo = email.split("@");
+        String [] partesCorreo = email.split("@"); // se divide al correo en dos partes y se meten en un array
         boolean correcto = true;
-        if (partesCorreo.length!=2){
+        if (partesCorreo.length!=2){ //si hay menos o hay mas de 2 partes entonces el email no es correcto
             correcto = false;
         }else {
             String parteIzquierda = partesCorreo[0];
             String parteDerecha = partesCorreo[1];
-            if (!parteIzquierda.matches("[a-z0-9_.]+")){
+            if (!parteIzquierda.matches("[a-z0-9_.]+")){ //si la parte izq tiene algo que no sean letras minusculas, numeros o puntos y guiones bajos entonces el email no es correcto (el + indica que se pueden repetir caracteres)
                 correcto=false;
             }
-            if (!(parteDerecha.equals("upm.es") || parteDerecha.equals("alumnos.upm.es"))) {
+            if (!(parteDerecha.equals("upm.es") || parteDerecha.equals("alumnos.upm.es"))) { //si la parte derecha no es upm.es o alumnos.upm.es entonces el email no es correcto
                 correcto = false;
             }
         }

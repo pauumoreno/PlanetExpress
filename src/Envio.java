@@ -143,7 +143,7 @@ public class Envio {
         int columna=0;
         double precio=0;
         Envio nuevoEnvio=null;
-        if (porte.porteLleno()){
+        if (porte.porteLleno()){//si la lista está llena se imprime el mensaje y devuelve nuevoEnvio = null
             System.out.println("El porte seleccionado está lleno");
         } else{
             do {
@@ -158,7 +158,7 @@ public class Envio {
                 } else {
                     System.out.println("El hueco seleccionado esta ocupado.");
                 }
-            }while (!porte.ocuparHueco(nuevoEnvio));
+            }while (!porte.ocuparHueco(nuevoEnvio));//el bucle se repite hasta que se introduzcan los datos correctos para poder ocupar el hueco
         }
         return nuevoEnvio;
     }
