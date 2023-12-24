@@ -85,6 +85,7 @@ public class PlanetExpress {
         for(int i = 0;i<listaPortes.getOcupacion();i++){
             listaPortes.getPorte(i).generarListaEnvios(ficheroEnvios);
         }
+
         listaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
         listaNaves.escribirNavesCsv(ficheroNaves);
         listaPortes.escribirPortesCsv(ficheroPortes);
@@ -262,28 +263,33 @@ public class PlanetExpress {
 
                         Cliente cliente = planetExpress.listaClientes.seleccionarCliente(teclado, "Email del cliente: ");
 
-                        if(cliente.getListaEnvios().getOcupacion() ==0){
+                        if(cliente.getListaEnvios().getOcupacion()==0){
                             System.out.println("El cliente no tiene ningun envio");
 
-                        }else{
+                        }else {
                             cliente.listarEnvios();
                             Envio envio = cliente.seleccionarEnvio(teclado, "Seleccione un envio: ");
                             char letra;
-                        do{
-                            letra = Utilidades.leerLetra(teclado,"¿Cancelar envío (c), o generar factura (f)? ",'a','z');
-                            if(letra!='c'&& letra!='f'){
-                                System.out.println("Carácter incorrecto");
-                            }else if(letra =='c'){
-                                envio.cancelar();
-                                System.out.println("Envio cancelado");
-
-                            }else if(letra =='f'){
-                                String fichero = Utilidades.leerCadena(teclado,"Nombre del fichero: ");
-                                envio.generarFactura(fichero);
-                                if(envio.generarFactura(fichero))
-                                System.out.println("Factura generada correctamente");
+                            boolean opcCorrecta=false;
+                            do {
+                                letra = Utilidades.leerLetra(teclado, "¿Cancelar envío (c), o generar factura (f)? ", 'a', 'z');
+                                if (letra == 'c' || letra == 'f') {
+                                    opcCorrecta = true;
+                                } else {
+                                    System.out.println("Carácter incorrecto");
+                                }
+                            }while (!opcCorrecta);
+                            if (letra == 'f'){
+                                String fichero = Utilidades.leerCadena(teclado, "Nombre del fichero: ");
+                                if (envio.generarFactura(fichero)) {
+                                    System.out.println("Factura generada correctamente");
+                                }
                             }
-                        }while(letra!='c'&& letra!='f');
+                            if (letra == 'c') {
+                                if (envio.cancelar()) {
+                                    System.out.println("Envio cancelado");
+                                }
+                            }
                         }
 
                         break;

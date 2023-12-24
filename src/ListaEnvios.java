@@ -124,7 +124,7 @@ public class ListaEnvios {
      * en el enunciado
      */
     public void listarEnvios() {
-        for(int i=0;i<envios.length;i++){
+        for(int i=0;i<getOcupacion();i++){
             System.out.println(getEnvio(i).toString());
         }
 
@@ -144,8 +144,7 @@ public class ListaEnvios {
         String buscar;
 
         do {
-            System.out.print(mensaje);
-            buscar = teclado.nextLine();
+            buscar=Utilidades.leerCadena(teclado, mensaje);
             for(int i = 0;i<getOcupacion();i++) {
                 if(buscar.equals(getEnvio(i).getLocalizador())) {
                     envio = getEnvio(i);
@@ -155,8 +154,7 @@ public class ListaEnvios {
             if (envio == null) {
                 System.out.println("Localizador incorrecto.");
             }
-        } while (volver == true);
-
+        } while (volver);
 
         return envio;
     }
