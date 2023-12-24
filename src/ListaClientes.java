@@ -5,23 +5,34 @@ import java.util.Scanner;
 
 /**
  * Description of the class
+ * Clase Lista de Clientes de la que podemos saber su ocupacion, si esta llena,
+ * buscar clientes en ella o insertar un cliente
  *
- * @author
- * @author
+ *
+ * @author PAULA CAMILA MORENO RUBIO
+ * @author DMYTRO KRYVITSKYY ROMANYUK
  * @version     1.0
  */
 public class ListaClientes {
+    /**
+     * Lista de clientes
+     */
     private Cliente[] clientes;
 
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
      *
-     * @param capacidad
+     * @param capacidad capacidad de la lista de pasajeros
      */
     public ListaClientes(int capacidad) {
         clientes = new Cliente[capacidad];
 
     }
+
+    /**
+     * Getter de ocupacion de lista clientes
+     * @return Devuelve el número de clientes que hay en la lista de clientes
+     */
     // TODO: Devuelve el número de clientes que hay en la lista de clientes
     public int getOcupacion() {
         int ocupados=0;
@@ -33,15 +44,31 @@ public class ListaClientes {
         return ocupados;
 
     }
+
+    /**
+     * Metodo que devuelve valor booleano en funcion a si esta llena la lista de clientes
+     * @return valor booleano en funcion a si esta llena la lista de clientes
+     */
     // TODO: ¿Está llena la lista de clientes?
     public boolean estaLlena() {
         return clientes.length<=getOcupacion();
 
     }
+
+    /**
+     * @param i  indice
+     * @return Devuelve el cliente dada el indice
+     */
     // TODO: Devuelve el cliente dada el indice
     public Cliente getCliente(int i) {
         return clientes[i];
     }
+
+    /**
+     * Metodo que inserta un cliente en la lista de clientes
+     * @param cliente Objeto de la clase cliente
+     * @return valor booleano en funcion a si se ha podido insertar el cliente en la lista
+     */
     // TODO: Inserta el cliente en la lista de clientes
     public boolean insertarCliente(Cliente cliente) {
         if(estaLlena()){
@@ -52,6 +79,11 @@ public class ListaClientes {
         }
 
     }
+
+    /**
+     * @param email eamil del cliente
+     * @return Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
+     */
     // TODO: Devuelve el cliente que coincida con el email, o null en caso de no encontrarlo
     public Cliente buscarClienteEmail(String email) {
         Cliente cliente = null;
@@ -69,9 +101,9 @@ public class ListaClientes {
      * TODO: Método para seleccionar un Cliente existente a partir de su email, usando el mensaje pasado como argumento
      *  para la solicitud y, siguiendo el orden y los textos mostrados en el enunciado.
      *  La función debe solicitar repetidamente hasta que se introduzca un email correcto
-     * @param teclado
-     * @param mensaje
-     * @return
+     * @param teclado Objeto de la clase Scanner para leer datos por teclado
+     * @param mensaje Instrucciones que ha de seguir el usario
+     * @return Cliente seleccionado
      */
     public Cliente seleccionarCliente(Scanner teclado, String mensaje) {
         Cliente cliente = null;
@@ -98,8 +130,10 @@ public class ListaClientes {
     /**
      * TODO: Método para guardar la lista de clientes en un fichero .csv, sobreescribiendo la información del mismo
      *  fichero
-     * @param fichero
-     * @return
+     * Método para guardar la lista de clientes en un fichero .csv, sobreescribiendo la información del mismo
+     * fichero
+     * @param fichero Nombre del fichero
+     * @return Valor booleano en funcion a si se ha podido escribir correctamente en el fichero
      */
     public boolean escribirClientesCsv(String fichero) {
         PrintWriter pw = null;
@@ -135,8 +169,10 @@ public class ListaClientes {
     /**
      * TODO: Genera una lista de Clientes a partir del fichero CSV, usando los límites especificados como argumentos
      *  para la capacidad de la lista y el número de billetes máximo por pasajero
-     * @param fichero
-     * @param capacidad
+     * Genera una lista de Clientes a partir del fichero CSV, usando los límites especificados como argumentos
+     *  para la capacidad de la lista y el número de billetes máximo por pasajero
+     * @param fichero nombre del fichero
+     * @param capacidad capacidad de la lista de clientes
      * @param maxEnviosPorCliente
      * @return lista de clientes
      */
