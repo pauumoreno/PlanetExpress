@@ -44,7 +44,6 @@ public class ListaClientes {
     }
     // TODO: Inserta el cliente en la lista de clientes
     public boolean insertarCliente(Cliente cliente) {
-        //insertar el cliente en el csv con escribirClientesCsv(String fichero)
         if(estaLlena()){
             return false;
         }else{
@@ -110,10 +109,7 @@ public class ListaClientes {
             pw = new PrintWriter(fichero);
 
             for(int i = 0;i<getOcupacion();i++) {
-                pw.printf("%s;%s;%s%n",
-                        getCliente(i).getNombre(),
-                        getCliente(i).getApellidos(),
-                        getCliente(i).getEmail());
+                pw.println(getCliente(i).getNombre()+";"+getCliente(i).getApellidos()+";"+getCliente(i).getEmail());
             }
 
         } catch (FileNotFoundException e) {

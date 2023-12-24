@@ -98,6 +98,7 @@ public class Cliente {
                 if (clientes.buscarClienteEmail(email)==null){ //si el cliente no está en el sistema entonces se inserta al nuevo cliente
                     System.out.println("Cliente con email " + email + " creado correctamente");
                     clientes.insertarCliente(nuevoCliente);
+                    repetido=false;
                 }else{
                     System.out.println("Ya existe un cliente con este email");
                     repetido=true;

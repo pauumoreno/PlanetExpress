@@ -88,6 +88,7 @@ public class Porte {
         this.llegada = llegada;
         this.precio = precio;
 
+        huecos = new boolean[nave.getFilas()][nave.getColumnas()];
 
     }
     public String getID() {
