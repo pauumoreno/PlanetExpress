@@ -3,23 +3,32 @@ import java.util.Scanner;
 
 /**
  * Description of the class
+ * Clase de Lista de envios en la que tenemos unos metodos para poder interactuar con ella,
+ * saber su ocupacion, si esta llena, insertar un envio o buscarlo...
  *
- * @author
- * @author
+ * @author PAULA CAMILA MORENO RUBIO
+ * @author DMYTRO KRYVITSKYY ROMANYUK
  * @version     1.0.1
  */
 public class ListaEnvios {
+    /**
+     * Lista de envios
+     */
     private Envio[] envios;
 
     /**
      * TODO: Constructor de la clase para inicializar la lista a una capacidad determinada
-     *
-     * @param capacidad
+     *Constructor de la clase para inicializar la lista a una capacidad determinada
+     * @param capacidad Capacidad de la lista de billetes
      */
     public ListaEnvios(int capacidad) {
         envios = new Envio[capacidad];
 
     }
+
+    /**
+     * @return  Devuelve el número de envíos que hay en la lista
+     */
     // TODO: Devuelve el número de envíos que hay en la lista
     public int getOcupacion() {
         int ocupados=0;
@@ -31,11 +40,20 @@ public class ListaEnvios {
         return ocupados;
 
     }
+
+    /**
+     * @return Valorb ooleano en funcion a si esta llena o no la lista de envios
+     */
     // TODO: ¿Está llena la lista de envíos?
     public boolean estaLlena() {
         return envios.length<=getOcupacion();
 
     }
+
+    /**
+     * @param i Indice
+     * @return  Devuelve el envio dado un indice
+     */
     //TODO: Devuelve el envio dado un indice
     public Envio getEnvio(int i) {
         return envios[i];
@@ -44,7 +62,7 @@ public class ListaEnvios {
 
     /**
      * TODO: insertamos un nuevo envío en la lista
-     * @param envio
+     * @param envio Objeto de la clase envio
      * @return true en caso de que se añada correctamente, false en caso de lista llena o error
      */
     public boolean insertarEnvio(Envio envio) {
@@ -59,7 +77,8 @@ public class ListaEnvios {
 
     /**
      * TODO: Buscamos el envio a partir del localizador pasado como parámetro
-     * @param localizador
+     * Buscamos el envio a partir del localizador pasado como parámetro
+     * @param localizador localizador del envio
      * @return el envio que encontramos o null si no existe
      */
     public Envio buscarEnvio(String localizador) {
@@ -75,9 +94,10 @@ public class ListaEnvios {
 
     /**
      * TODO: Buscamos el envio a partir del idPorte, fila y columna pasados como parámetros
-     * @param idPorte
-     * @param fila
-     * @param columna
+     * Buscamos el envio a partir del idPorte, fila y columna pasados como parámetros
+     * @param idPorte Id del porte
+     * @param fila fila del hueco
+     * @param columna columna del hueco
      * @return el envio que encontramos o null si no existe
      */
     public Envio buscarEnvio(String idPorte, int fila, int columna) {
@@ -100,7 +120,8 @@ public class ListaEnvios {
 
     /**
      * TODO: Eliminamos un envio a través del localizador pasado por parámetro
-     * @param localizador
+     * Metodo por el cual eliminamos un envio a través del localizador pasado por parámetro
+     * @param localizador locaclzador del envio
      * @return True si se ha borrado correctamente, false en cualquier otro caso
      */
     public boolean eliminarEnvio (String localizador) {
@@ -122,6 +143,8 @@ public class ListaEnvios {
     /**
      * TODO: Muestra por pantalla los Envios de la lista, con el formato que aparece
      * en el enunciado
+     * Metodo que muestra por pantalla los Envios de la lista, con el formato que aparece
+     * en el enunciado
      */
     public void listarEnvios() {
         for(int i=0;i<getOcupacion();i++){
@@ -134,9 +157,13 @@ public class ListaEnvios {
      * TODO: Permite seleccionar un Envio existente a partir de su localizador, usando el mensaje pasado como argumento
      *  para la solicitud y siguiendo el orden y los textos mostrados en el enunciado.
      *  La función solicita repetidamente hasta que se introduzca un localizador correcto
-     * @param teclado
-     * @param mensaje
-     * @return
+     *
+     * Metodo que permite seleccionar un Envio existente a partir de su localizador, usando el mensaje pasado como argumento
+     * para la solicitud y siguiendo el orden y los textos mostrados en el enunciado.
+     * La función solicita repetidamente hasta que se introduzca un localizador correcto
+     * @param teclado objeto de la clase Scanner para leer datos por teclado
+     * @param mensaje itrucciones que ha de seguir el usuario
+     * @return objeto e la clase envio
      */
     public Envio seleccionarEnvio(Scanner teclado, String mensaje) {
         Envio envio = null;
@@ -163,8 +190,9 @@ public class ListaEnvios {
 
     /**
      * TODO: Añade los Envios al final de un fichero CSV, SIN SOBREESCRIBIR la información
-     * @param fichero
-     * @return
+     * Metodo que añade los Envios al final de un fichero CSV, SIN SOBREESCRIBIR la información
+     * @param fichero nombre el fichero
+     * @return valor boleano en funciona si se ha podido añadir al fichero el envio
      */
     public boolean aniadirEnviosCsv(String fichero) {
         PrintWriter pw = null;
@@ -221,9 +249,10 @@ public class ListaEnvios {
 
     /**
      * TODO: Lee los Envios del fichero CSV y los añade a las listas de sus respectivos Portes y Clientes
-     * @param ficheroEnvios
-     * @param portes
-     * @param clientes
+     * Metodo que lee los Envios del fichero CSV y los añade a las listas de sus respectivos Portes y Clientes
+     * @param ficheroEnvios Nombre del fichero
+     * @param portes Lista de portes
+     * @param clientes Lista de clientes
      */
     public static void leerEnviosCsv(String ficheroEnvios, ListaPortes portes, ListaClientes clientes) {
         Scanner sc = null;
