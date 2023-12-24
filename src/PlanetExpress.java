@@ -6,23 +6,53 @@ import java.util.Random;
 import java.util.Scanner;
 /**
  * Clase principal de Planet Express App, la práctica de Taller de Programación
+ * Intergra los metodos cargar datos, gusrdar datos o buscar porte entre otros
+ * Ademas del menu y el main del proyecto
+ * y el resto de funcionalidades que hacen que este se pueda ejecutar
  *
  * @author      Taller de Progamación
  * @version     1.0.0.1
  */
 public class PlanetExpress {
+    /**
+     * Numero maximo de portes
+     */
     private final int maxPortes;
+    /**
+     * Numero maximo de naves
+     */
     private final int maxNaves;
+    /**
+     * Numero maximo de clientes
+     */
     private final int maxClientes;
+    /**
+     * Número maximo de envios por cliente
+     */
     private final int maxEnviosPorCliente;
+    /**
+     * Lista de puertos espaciales
+     */
     private ListaPuertosEspaciales listaPuertosEspaciales;
+    /**
+     * Número maximo de puertos espaciales
+     */
     private final int maxPuertosEspaciales;
+    /**
+     * Lista de naves
+     */
     private ListaNaves listaNaves;
+    /**
+     * Lista de clientes
+     */
     private ListaClientes listaClientes;
+    /**
+     * Lista de portes
+     */
     private ListaPortes listaPortes;
     /**
      * TODO: Rellene el constructor de la clase
-     *
+     * Constructor de la clase
      * @param maxPuertosEspaciales Máximo número de puertos espaciales que tendrá la lista de puertos espaciales de PlanetExpress App.
      * @param maxNaves Máximo número de naves que tendrá la lista de naves de PlanetExpress App.
      * @param maxPortes Máximo número de portes que tendrá la lista de portes de PlanetExpress App.
@@ -39,11 +69,13 @@ public class PlanetExpress {
     /**
      * TODO: Metodo para leer los datos de los ficheros específicados en el enunciado y los agrega a
      *  la información de PlanetExpress (listaPuertosEspaciales, listaNaves, listaPortes, listaClientes)
-     * @param ficheroPuertos
-     * @param ficheroNaves
-     * @param ficheroPortes
-     * @param ficheroClientes
-     * @param ficheroEnvios
+     * Metodo para leer los datos de los ficheros específicados en el enunciado y los agrega a
+     * la información de PlanetExpress (listaPuertosEspaciales, listaNaves, listaPortes, listaClientes)
+     * @param ficheroPuertos Fichero de puertos espaciales
+     * @param ficheroNaves Fichero de naves
+     * @param ficheroPortes Fichero de portes
+     * @param ficheroClientes fichero de clientes
+     * @param ficheroEnvios fichero de envios
      */
     public void cargarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
         listaPuertosEspaciales = ListaPuertosEspaciales.leerPuertosEspacialesCsv(ficheroPuertos,maxPuertosEspaciales);
@@ -51,15 +83,20 @@ public class PlanetExpress {
         listaPortes = ListaPortes.leerPortesCsv(ficheroPortes,maxPortes,listaPuertosEspaciales,listaNaves);
         listaClientes = ListaClientes.leerClientesCsv(ficheroClientes,maxClientes,maxEnviosPorCliente);
         ListaEnvios.leerEnviosCsv(ficheroEnvios,listaPortes,listaClientes);
+
+
+
     }
     /**
      * TODO: Metodo para almacenar los datos de PlanetExpress en los ficheros .csv especificados
      *  en el enunciado de la práctica
-     * @param ficheroPuertos
-     * @param ficheroNaves
-     * @param ficheroPortes
-     * @param ficheroClientes
-     * @param ficheroEnvios
+     * Metodo para almacenar los datos de PlanetExpress en los ficheros .csv especificados
+     *  en el enunciado de la práctica
+     *@param ficheroPuertos Fichero de puertos espaciales
+     * @param ficheroNaves Fichero de naves
+     * @param ficheroPortes Fichero de portes
+     * @param ficheroClientes fichero de clientes
+     * @param ficheroEnvios fichero de envios
      */
     public void guardarDatos(String ficheroPuertos, String ficheroNaves, String ficheroPortes, String ficheroClientes, String ficheroEnvios) {
         PrintWriter pw = null;
@@ -91,15 +128,36 @@ public class PlanetExpress {
         listaClientes.escribirClientesCsv(ficheroClientes);
     }
 
+    /**
+     * Metodo que devuelve un valor booleano en funcion si se ha alcanzado el maximo numero de portes
+     * @return Valor booleano en funcion si se ha alcanzado el maximo numero de portes
+     */
     public boolean maxPortesAlcanzado() {
         return listaPortes.estaLlena();
     }
+
+    /**
+     * Metodo que devuelve un valor booleano en funcion asi se ha podido insertar el porte
+     * @param porte Objeto de la clase porte
+     * @return valor booleano en funcion asi se ha podido insertar el porte
+     */
     public boolean insertarPorte (Porte porte) {
         return listaPortes.insertarPorte(porte);
     }
+
+    /**
+     * Metodo que devuelve un valor booleano en funcion as si se ha alcanzado el maximo numero de clientes
+     * @return Valor booleano en funcion as si se ha alcanzado el maximo numero de clientes
+     */
     public boolean maxClientesAlcanzado() {
         return listaClientes.estaLlena();
     }
+
+    /**
+     * Metodo que devuelve alor bolleano en funcion a si se ha insertado un cliente o no
+     * @param cliente Objeto de la clase cliente
+     * @return valor bolleano en funcion a si se ha insertado un cliente o no
+     */
     public boolean insertarCliente (Cliente cliente) {
         return listaClientes.insertarCliente(cliente);
     }
@@ -108,9 +166,13 @@ public class PlanetExpress {
      *  Devuelve una lista de los portes entre dos puertos espaciales con una fecha de salida solicitados por teclado
      *  al usuario en el orden y con los textos establecidos (tomar como referencia los ejemplos de ejecución en el
      *  enunciado de la prática)
+     * Metodo para buscar los portes especificados tal y como aparece en el enunciado de la práctica,
+     * Devuelve una lista de los portes entre dos puertos espaciales con una fecha de salida solicitados por teclado
+     *  al usuario en el orden y con los textos establecidos (tomar como referencia los ejemplos de ejecución en el
+     *  enunciado de la prática)
      *
-     * @param teclado
-     * @return
+     * @param teclado objeto de la clase Scanner para leer datos desde teclado
+     * @return devuelve una lista de portes
      */
     public ListaPortes buscarPorte(Scanner teclado) { //REVISAR
         String codigoOrigen = Utilidades.leerCadena(teclado,"Ingrese código de puerto Origen: ");
@@ -124,10 +186,13 @@ public class PlanetExpress {
      * TODO: Metodo para contratar un envio tal y como se indica en el enunciado de la práctica. Se contrata un envio para un porte
      *  especificado, pidiendo por teclado los datos necesarios al usuario en el orden y con los textos (tomar como referencia los
      *  ejemplos de ejecución en el enunciado de la prática)
+     * Metodo para contratar un envio tal y como se indica en el enunciado de la práctica. Se contrata un envio para un porte
+     * especificado, pidiendo por teclado los datos necesarios al usuario en el orden y con los textos (tomar como referencia los
+     *  jemplos de ejecución en el enunciado de la prática)
      *
-     * @param teclado
-     * @param rand
-     * @param porte
+     * @param teclado objeto de la clase Scanner para leer datos desde teclado
+     * @param rand genera un numero aleatorio
+     * @param porte objeto de la clase porte
      */
     public void contratarEnvio(Scanner teclado, Random rand, Porte porte) { //REVISAR
         char letra;
@@ -185,8 +250,9 @@ public class PlanetExpress {
     }
     /**
      * TODO Metodo statico con la interfaz del menú de entrada a la App.
+     * Metodo statico con la interfaz del menú de entrada a la App
      * Tiene que coincidir con las trazas de ejecución que se muestran en el enunciado
-     * @param teclado
+     * @param teclado objeto de la clase Scanner para leer datos desde teclado
      * @return opción seleccionada
      */
     public static int menu(Scanner teclado) {
@@ -199,6 +265,11 @@ public class PlanetExpress {
      * TODO: Método Main que carga los datos de los ficheros CSV pasados por argumento (consola) en PlanetExpress,
      *  llama iterativamente al menú y realiza la opción especificada hasta que se indique la opción Salir. Al finalizar
      *  guarda los datos de PlanetExpress en los mismos ficheros CSV.
+     *
+     *
+     * Método Main que carga los datos de los ficheros CSV pasados por argumento (consola) en PlanetExpress,
+     * llama iterativamente al menú y realiza la opción especificada hasta que se indique la opción Salir. Al finalizar
+     * guarda los datos de PlanetExpress en los mismos ficheros CSV.
      * @param args argumentos de la línea de comandos, recibe **10 argumentos** estrictamente en el siguiente orden:
      * 1. Número máximo de puertos espaciales que tendrá la lista de puertos espaciales de PlanetExpress App.
      * 2. Número máximo de naves que tendrá la lista de naves de PlanetExpress App.

@@ -445,7 +445,7 @@ public class Porte {
 
         destino = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Destino: ");
 
-        muelleDestino=Utilidades.leerNumero(teclado,"Ingrese codigo de puerto Destino (1-"+destino.getMuelles()+"): ",1,destino.getMuelles());
+        muelleDestino=Utilidades.leerNumero(teclado,"Ingrese codigo de muelle Destino (1-"+destino.getMuelles()+"): ",1,destino.getMuelles());
 
         naves.mostrarNaves();
         nave = naves.seleccionarNave(teclado, "Ingrese matrícula de la nave: ", origen.distancia(destino));
