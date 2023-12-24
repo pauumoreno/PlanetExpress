@@ -10,8 +10,8 @@ import java.util.Scanner;
  * Ademas del menu y el main del proyecto
  * y el resto de funcionalidades que hacen que este se pueda ejecutar
  *
- * @author      Taller de Progamación
- * @version     1.0.0.1
+ * @author PAULA CAMILA MORENO RUBIO
+ * @author DMYTRO KRYVITSKYY ROMANYUK
  */
 public class PlanetExpress {
     /**

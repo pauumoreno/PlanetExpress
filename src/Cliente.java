@@ -6,8 +6,8 @@ import java.util.Scanner;
  * Además, encapsula otros métodos que sirven para saber si ha alcanzado su numero maximo de envios, añadir o cancelar
  * un envio, dar de alta un nuevo cliente o comprobar si el email es correcto.
  *
- * @author Taller de Programación
- * @version     1.0.2
+ *  @author PAULA CAMILA MORENO RUBIO
+ *  @author DMYTRO KRYVITSKYY ROMANYUK
  */
 public class Cliente {
     /**
