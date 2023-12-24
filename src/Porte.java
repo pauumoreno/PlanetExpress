@@ -87,19 +87,41 @@ public class Porte {
         this.muelleDestino = muelleDestino;
         this.llegada = llegada;
         this.precio = precio;
+        listaEnvios = new ListaEnvios(nave.getColumnas()*nave.getFilas());
+        huecos = new boolean[nave.getColumnas()][nave.getFilas()];
 
         huecos = new boolean[nave.getFilas()][nave.getColumnas()];
 
     }
+
+    /**
+     * Getter de atributo id
+     * @return id de porte
+     */
     public String getID() {
         return id;
     }
+
+    /**
+     * Getter de atributo  nave
+     * @return nave del porte
+     */
     public Nave getNave(){
         return nave;
     }
+
+    /**
+     * Getter del origen
+     * @return Puerto espacial de origen del porte
+     */
     public PuertoEspacial getOrigen() {
         return origen;
     }
+
+    /**
+     * Getter de muelle de origen
+     * @return Muelle de origen
+     */
     public int getMuelleOrigen() {
         return muelleOrigen;
     }
@@ -365,14 +387,11 @@ public class Porte {
 
         origen = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Origen: ");
 
+        muelleOrigen=Utilidades.leerNumero(teclado,"Ingrese el muelle de Origen (1-"+origen.getMuelles()+"): ",1,origen.getMuelles());
 
-        muelleOrigen=Utilidades.leerNumero(teclado,"Ingrese el muelle de  Origen (1-"+origen.getMuelles()+"): ",1,origen.getMuelles());
+        destino = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de puerto Destino: ");
 
-
-        destino = puertosEspaciales.seleccionarPuertoEspacial(teclado, "Ingrese código de Puerto Destino: ");
-
-
-        muelleDestino=Utilidades.leerNumero(teclado,"Ingrese puerto Destino (1-"+destino.getMuelles()+"): ",1,destino.getMuelles());
+        muelleDestino=Utilidades.leerNumero(teclado,"Ingrese codigo de puerto Destino (1-"+destino.getMuelles()+"): ",1,destino.getMuelles());
 
         naves.mostrarNaves();
         nave = naves.seleccionarNave(teclado, "Ingrese matrícula de la nave: ", origen.distancia(destino));
@@ -387,9 +406,11 @@ public class Porte {
         }while(llegada.anterior(salida)||llegada.coincide(salida));
 
 
-        precio = Utilidades.leerNumero(teclado,"Ingrese precio de porte: ",0.0,9999.0);
+        precio = Utilidades.leerNumero(teclado,"Ingrese precio de pasaje: ",0.0,9999.0);
 
         Porte porte = new Porte(generarID(rand),nave,origen,muelleOrigen,salida,destino,muelleDestino,llegada,precio);
+        portes.insertarPorte(porte);
+
 
         System.out.println("Porte "+porte.getID()+" creado con éxito.");
 
