@@ -373,7 +373,7 @@ public class Porte {
 
         muelleDestino=Utilidades.leerNumero(teclado,"Ingrese puerto Destino (1-"+destino.getMuelles()+"): ",1,destino.getMuelles());
 
-
+        naves.mostrarNaves();
         nave = naves.seleccionarNave(teclado, "Ingrese matrícula de la nave: ", origen.distancia(destino));
 
 

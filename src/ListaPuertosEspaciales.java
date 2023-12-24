@@ -89,6 +89,9 @@ public class ListaPuertosEspaciales {
                     correcto = true;
                 }
             }
+            if (puertoEspacial==null){
+                System.out.println("Código de puerto no encontrado.");
+            }
         } while (!correcto);
         return puertoEspacial;
     }

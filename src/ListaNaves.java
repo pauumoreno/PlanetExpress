@@ -80,7 +80,7 @@ public class ListaNaves {
     }
     // TODO: Muestra por pantalla las naves de la lista con el formato indicado en el enunciado
     public void mostrarNaves() {
-        for(int i=0;i<naves.length;i++){
+        for(int i=0;i<getOcupacion();i++){
             System.out.println(getNave(i).toString());;
         }
 
