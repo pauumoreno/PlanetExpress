@@ -91,7 +91,7 @@ public class Porte {
         listaEnvios = new ListaEnvios(nave.getColumnas()*nave.getFilas());
         huecos = new boolean[nave.getColumnas()][nave.getFilas()];
 
-        huecos = new boolean[nave.getFilas()][nave.getColumnas()];
+
 
     }
 
