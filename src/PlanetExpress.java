@@ -293,11 +293,11 @@ public class PlanetExpress {
 
                         break;
                     case 5:     // TODO: Lista de envíos de un porte
-                       Porte porte = planetExpress.listaPortes.seleccionarPorte(teclado, "Seleccione un porte: ","cancelar");
-                        System.out.print("Nombre del fichero: ");
-                        String fichero = teclado.next();
-                        porte.generarListaEnvios(fichero);
-                        System.out.println("\t\tFichero creado correctamente");
+                        Porte porte = planetExpress.listaPortes.seleccionarPorte(teclado, "Seleccione un porte: ","cancelar");
+                        String fichero = Utilidades.leerCadena(teclado,"Nombre del fichero: ");
+                        if(porte.generarListaEnvios(fichero)) {
+                            System.out.println("\t\tFichero creado correctamente");
+                        }
 
                         break;
                 }

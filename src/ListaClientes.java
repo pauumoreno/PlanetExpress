@@ -158,7 +158,6 @@ public class ListaClientes {
 
         } catch (FileNotFoundException e) {
             System.out.println("Fichero Clientes no encontrado");
-            return null;
         } finally {
             try{
                 if(sc!=null)

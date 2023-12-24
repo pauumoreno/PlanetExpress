@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
@@ -373,12 +374,13 @@ public class Porte {
      */
     public boolean generarListaEnvios(String fichero) {
         PrintWriter pw = null;
+        boolean correcto = true;
         try {
             pw = new PrintWriter(fichero);
             pw.println("--------------------------------------------------");
             pw.println("-------- Lista de envíos del porte "+id+" --------");
             pw.println("--------------------------------------------------");
-            pw.println(String.format("%-8"+"%-15","Hueco","Cliente"));
+            pw.printf("%-8s%-15s%n", "Hueco", "Cliente");
             for(int i = 1;i<nave.getFilas()+1;i++){
                 for(int j = 1;j<nave.getColumnas()+1;j++){
                     Envio envio = buscarEnvio(i,j);
@@ -390,10 +392,14 @@ public class Porte {
                     }
                 }
             }
-            return true;
         } catch (FileNotFoundException e) {
-            return false;
+            correcto= false;
+        } finally{
+            if (pw != null){
+                pw.close();
+            }
         }
+        return correcto;
     }
 
 

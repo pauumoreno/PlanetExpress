@@ -154,10 +154,8 @@ public class ListaPuertosEspaciales {
             }
         } catch (FileNotFoundException e){
             System.out.println("Fichero "+fichero+" no encontrado.");
-            return null;
         }catch (Exception e) {
             System.out.println("Error en la lectura del fichero "+fichero);
-            return null;
         } finally {
             try{
                 if (sc != null){
