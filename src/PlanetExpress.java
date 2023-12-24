@@ -85,7 +85,6 @@ public class PlanetExpress {
         for(int i = 0;i<listaPortes.getOcupacion();i++){
             listaPortes.getPorte(i).generarListaEnvios(ficheroEnvios);
         }
-
         listaPuertosEspaciales.escribirPuertosEspacialesCsv(ficheroPuertos);
         listaNaves.escribirNavesCsv(ficheroNaves);
         listaPortes.escribirPortesCsv(ficheroPortes);
@@ -263,10 +262,10 @@ public class PlanetExpress {
 
                         Cliente cliente = planetExpress.listaClientes.seleccionarCliente(teclado, "Email del cliente: ");
 
-                        if(cliente.getListaEnvios().getOcupacion()==0){
+                        if(cliente.getListaEnvios().getOcupacion() ==0){
                             System.out.println("El cliente no tiene ningun envio");
 
-                        }else {
+                        }else{
                             cliente.listarEnvios();
                             Envio envio = cliente.seleccionarEnvio(teclado, "Seleccione un envio: ");
                             char letra;
