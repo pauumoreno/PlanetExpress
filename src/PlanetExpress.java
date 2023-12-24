@@ -242,7 +242,6 @@ public class PlanetExpress {
                             System.out.println("Maximo numero de clientes alcanzado");
                         else{
                             planetExpress.insertarCliente(Cliente.altaCliente(teclado,planetExpress.listaClientes, planetExpress.maxEnviosPorCliente));
-                            break;
                         }
 
                         break;
@@ -263,6 +262,36 @@ public class PlanetExpress {
 
                         Cliente cliente = planetExpress.listaClientes.seleccionarCliente(teclado, "Email del cliente: ");
 
+                        if(cliente.getListaEnvios().getOcupacion() ==0){
+                            System.out.println("El cliente no tiene ningun envio");
+
+                        }else{
+                            cliente.listarEnvios();
+                            Envio envio = cliente.seleccionarEnvio(teclado, "Seleccione un envio: ");
+                            char letra;
+                        do{
+                            letra = Utilidades.leerLetra(teclado,"¿Cancelar envío (c), o generar factura (f)? ",'a','z');
+                            if(letra!='c'&& letra!='f'){
+                                System.out.println("Carácter incorrecto");
+                            }else if(letra =='c'){
+                                envio.cancelar();
+                                System.out.println("Envio cancelado");
+
+                            }else if(letra =='f'){
+
+                                String fichero = Utilidades.leerCadena(teclado,"Nombre del fichero: ");
+                                envio.generarFactura(fichero);
+                                if(envio.generarFactura(fichero))
+                                System.out.println("Factura generada correctamente");
+                            }
+
+                        }while(letra!='c'&& letra!='f');
+
+
+
+
+
+                        }
 
 
 

@@ -4,7 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * Description of the class: Clase Porte, que contiene los atributos(id, nave, PuertoEspacial origen/destino, precio... )
+ * y metodos(numHuecosLibres, dar de alta un porte, buscar envio...) que representan la clase Porte.
  *
  * @author PAULA CAMILA MORENO RUBIO
  * @author DMYTRO KRYVITSKYY ROMANYUK
@@ -13,16 +14,49 @@ import java.util.Scanner;
 public class Porte {
 
 
+    /**
+     * Matriz que representa huecos del porte
+     */
     private boolean[][] huecos;
+    /**
+     * Id del porte
+     */
     private String id;
+    /**
+     * Nave realiza el porte
+     */
     private Nave nave;
+    /**
+     * Puerto espacial de origen
+     */
     private PuertoEspacial origen;
+    /**
+     * muelle de origen
+     */
     private int muelleOrigen;
+    /**
+     * Fecha de salida del porte
+     */
     private Fecha salida;
+    /**
+     * Puerto espacial de destino
+     */
     private PuertoEspacial destino;
+    /**
+     * Muelle de destino
+     */
     private int muelleDestino;
+    /**
+     * Fecha de llegada del porte
+     */
     private Fecha llegada;
+    /**
+     * Precio del porte
+     */
     private double precio;
+    /**
+     * Lista de envios del porte
+     */
     private ListaEnvios listaEnvios;
 
 
@@ -30,39 +64,29 @@ public class Porte {
 
     /**
      * TODO: Completa el constructo de la clase
+     * Constructor de la clase Porte que define los siguientes parametros:
      *
-     * @param id
-     * @param nave
-     * @param origen
-     * @param muelleOrigen
-     * @param salida
-     * @param destino
-     * @param muelleDestino
-     * @param llegada
-     * @param precio
+     * @param id del porte
+     * @param nave nave del porte
+     * @param origen Puerto espacial del que sale el porte
+     * @param muelleOrigen Muelle de origen
+     * @param salida fecha de salida del porte
+     * @param destino Puerto espacial al que llega el porte
+     * @param muelleDestino Muelle destino
+     * @param llegada fecha de llegada del porte
+     * @param precio Precio en SSD del porte
      */
     public Porte(String id, Nave nave, PuertoEspacial origen, int muelleOrigen, Fecha salida, PuertoEspacial destino, int muelleDestino, Fecha llegada, double precio) {
 
         this.id = id;
         this.nave = nave;
         this.origen = origen;
-        this.destino = destino;
         this.muelleOrigen = muelleOrigen;
-        this.muelleDestino = muelleDestino;
         this.salida = salida;
+        this.destino = destino;
+        this.muelleDestino = muelleDestino;
         this.llegada = llegada;
         this.precio = precio;
-
-        listaEnvios = new ListaEnvios(nave.getFilas()*nave.getColumnas());
-        huecos = new boolean[nave.getFilas()+1][nave.getColumnas()+1];
-
-
-
-
-
-
-
-
 
 
     }
@@ -374,7 +398,5 @@ public class Porte {
 
 
 
-
-       // return null;   PREGUNTAR SI SE PUEDE QUITAR
     }
 }
