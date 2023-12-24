@@ -1,21 +1,40 @@
 /**
- * Description of the class
+ * Nave es una clase que contiene los atributos de una nave: marca, modelo, matricula, filas y columnas de la bodega
+ * y su alcance. Además de sus respectivos getters y toString.
  *
  * @author PAULA CAMILA MORENO RUBIO
  * @author DMYTRO KRYVITSKYY ROMANYUK
  * @version     1.0
  */
 public class Nave {
+    /**
+     * Marca de la nave
+     */
     private String marca;
+    /**
+     * Modelo de la nave
+     */
     private String modelo;
+    /**
+     * Matrícula de la nave
+     */
     private String matricula;
+    /**
+     * Columnas de la bodega de carga de la nave para almacenar contenedores
+     */
     private int columnas;
+    /**
+     * Filas de la bodega de carga de la nave para almacenar contenedores
+     */
     private int filas;
+    /**
+     * Alcance máximo de la nave (en UA's)
+     */
     private double alcance;
 
 
     /**
-     * Constructor of the class
+     * Constructor de la clase Nave que define los siguientes parametros:
      *
      * @param marca
      * @param modelo
@@ -32,21 +51,51 @@ public class Nave {
         this.filas = filas;
         this.alcance = alcance;
     }
+
+    /**
+     * Getter de atributo Marca
+     * @return Marca de la nave
+     */
     public String getMarca() {
         return marca;
     }
+
+    /**
+     * Getter de atributo Modelo
+     * @return Modelo de la nave
+     */
     public String getModelo() {
         return modelo;
     }
+
+    /**
+     * Getter de atributo Matrícula
+     * @return Matrícula de la nave
+     */
     public String getMatricula() {
         return matricula;
     }
+
+    /**
+     * Getter de atributo Columnas
+     * @return Columnas de la bodega
+     */
     public int getColumnas() {
         return columnas;
     }
+
+    /**
+     * Getter de atributo Filas
+     * @return Filas de la bodega
+     */
     public int getFilas() {
         return filas;
     }
+
+    /**
+     * Getter de atributo Alcance
+     * @return Alcance máximo de la nave
+     */
     public double getAlcance() {
         return alcance;
     }

@@ -199,7 +199,7 @@ public class ListaClientes {
                 if(sc!=null)
                     sc.close();
             }catch (Exception exc){
-                System.out.println("Error de cirre del fichero "+fichero);
+                System.out.println("Error de ciErre del fichero "+fichero);
             }
 
         }

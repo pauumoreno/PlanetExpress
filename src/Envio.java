@@ -4,7 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * Envio es una clase que contiene los atributos de un envío: localizador, porte, cliente, fila, columna y precio; y sus respectivos getters y toString.
+ * Además, encapsula otros métodos que sirven para cancelar un envio, generar una factura, generar un localizador y dar de alta un envio
  *
  * @author PAULA CAMILA MORENO RUBIO
  * @author DMYTRO KRYVITSKYY ROMANYUK
@@ -12,15 +13,33 @@ import java.util.Scanner;
  */
 public class Envio {
 
+    /**
+     * Localizador del Envío
+     */
     private String localizador;
+    /**
+     * Porte asociado al Envío
+     */
     private Porte porte;
+    /**
+     * Cliente que contrata el Envío
+     */
     private Cliente cliente;
+    /**
+     * Fila del hueco donde se asigna el envío dentro del Porte
+     */
     private int fila;
+    /**
+     * Columna del hueco donde se asigna el envío dentro del Porte
+     */
     private int columna;
+    /**
+     * Precio del Envío
+     */
     private double precio;
 
     /**
-     * Constructor of the class
+     * Constructor de la clase Envio que define los siguientes parametros:
      *
      * @param localizador
      * @param porte
@@ -37,18 +56,43 @@ public class Envio {
         this.columna = columna;
         this.precio = precio;
     }
+
+    /**
+     * Getter del atributo Localizador
+     * @return Localizador del Envío
+     */
     public String getLocalizador() {
         return localizador;
     }
+
+    /**
+     * Getter del atributo Porte
+     * @return Porte asociado al Envío
+     */
     public Porte getPorte() {
         return porte;
     }
+
+    /**
+     * Getter del atributo Cliente
+     * @return Cliente que contrata el Envío
+     */
     public Cliente getCliente() {
         return cliente;
     }
+
+    /**
+     * Getter del atributo Fila
+     * @return Fila del hueco donde se asigna el envío dentro del Porte
+     */
     public int getFila() {
         return fila;
     }
+
+    /**
+     * Getter del atributo Columna
+     * @return Columna del hueco donde se asigna el envío dentro del Porte
+     */
     public int getColumna() {
         return columna;
     }
@@ -57,6 +101,11 @@ public class Envio {
         final String[] abecedario = {" ","A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         return abecedario[columna];
     }
+
+    /**
+     * Getter del atributo Precio
+     * @return Precio del Envío
+     */
     public double getPrecio() {
         return precio;
     }
@@ -115,7 +164,7 @@ public class Envio {
      *   NOTA: Usar el objeto rand pasado como argumento para la parte aleatoria.
      * @param rand
      * @param idPorte
-     * @return
+     * @return localizador
      */
     public static String generarLocalizador(Random rand, String idPorte) {
         StringBuilder localizador = new StringBuilder(idPorte);

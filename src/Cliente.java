@@ -1,19 +1,34 @@
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * Cliente es una clase que contiene los atributos de un cliente: nombre, apellidos, email y los envios que ha contratado;
+ * y sus respectivos getters y toString.
+ * Además, encapsula otros métodos que sirven para saber si ha alcanzado su numero maximo de envios, añadir o cancelar
+ * un envio, dar de alta un nuevo cliente o comprobar si el email es correcto.
  *
  * @author Taller de Programación
  * @version     1.0.2
  */
 public class Cliente {
+    /**
+     * Lista de envíos contratados por dicho Cliente
+     */
     private final ListaEnvios listaEnvios;
+    /**
+     * Nombre del cliente
+     */
     private final String nombre;
+    /**
+     * Apellidos del cliente
+     */
     private final String apellidos;
+    /**
+     * Email del cliente
+     */
     private final String email;
 
     /**
-     * Constructor of the class
+     * Constructor de la clase Cliente que define los siguientes parametros:
      *
      * @param nombre Nombre del cliente
      * @param apellidos Apellidos del cliente
@@ -26,12 +41,27 @@ public class Cliente {
         this.email = email;
         this.listaEnvios = new ListaEnvios(maxEnvios);
     }
+
+    /**
+     * Getter del atributo Nombre
+     * @return Nombre del cliente
+     */
     public String getNombre() {
         return nombre;
     }
+
+    /**
+     * Getter del atributo Apellidos
+     * @return Apellidos del cliente
+     */
     public String getApellidos() {
         return apellidos;
     }
+
+    /**
+     * Getter del atributo Email
+     * @return Email del cliente
+     */
     public String getEmail() {
         return email;
     }
@@ -47,6 +77,11 @@ public class Cliente {
     public Envio getEnvio(int i) {
         return listaEnvios.getEnvio(i);
     }
+
+    /**
+     * Getter de la lista de envios del cliente
+     * @return Lista de envíos contratados por dicho Cliente
+     */
     public ListaEnvios getListaEnvios() {
         return listaEnvios;
     }
@@ -54,6 +89,12 @@ public class Cliente {
     public boolean aniadirEnvio(Envio envio) {
         return listaEnvios.insertarEnvio(envio);
     }
+
+    /**
+     * Busca un envío por su localizador
+     * @param localizador
+     * @return envio con ese localizador
+     */
     public Envio buscarEnvio(String localizador) {
         return listaEnvios.buscarEnvio(localizador);
     }
@@ -61,6 +102,10 @@ public class Cliente {
     public boolean cancelarEnvio(String localizador) {
         return listaEnvios.eliminarEnvio(localizador);
     }
+
+    /**
+     * Método que lista todos los envios hechos por el cliente
+     */
     public void listarEnvios() {
         listaEnvios.listarEnvios();
     }

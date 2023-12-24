@@ -5,7 +5,8 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
- * Description of the class
+ * Clase de Lista de Portes en la que tenemos unos metodos para poder interactuar con la lista.
+ * Con ella podemos saber su ocupacion, si esta llena o no, insertar o buscar un Porte, listar los portes, y escribirlos o leerlos de csvs.
  *
  * @author PAULA CAMILA MORENO RUBIO
  * @author DMYTRO KRYVITSKYY ROMANYUK
@@ -78,7 +79,7 @@ public class ListaPortes {
      * @param codigoOrigen
      * @param codigoDestino
      * @param fecha
-     * @return
+     * @return lista de portes que van de un puerto espacial a otro en una fecha determinada
      */
     public ListaPortes buscarPortes(String codigoOrigen, String codigoDestino, Fecha fecha) { //REVISAR
         ListaPortes listaPortes = new ListaPortes(getOcupacion());
@@ -112,7 +113,7 @@ public class ListaPortes {
      * @param teclado
      * @param mensaje
      * @param cancelar
-     * @return
+     * @return porte con el id dado
      */
     public Porte seleccionarPorte(Scanner teclado, String mensaje, String cancelar) {
         listarPortes();
@@ -142,7 +143,7 @@ public class ListaPortes {
      * TODO: Ha de escribir la lista de Portes en la ruta y nombre del fichero pasado como parámetro.
      *  Si existe el fichero, SE SOBREESCRIBE, si no existe se crea.
      * @param fichero
-     * @return
+     * @return true si los portes se escriben correctamente en el archivo, false si no
      */
     public boolean escribirPortesCsv(String fichero) {
         Scanner scanner = null;
@@ -185,7 +186,7 @@ public class ListaPortes {
      * @param capacidad
      * @param puertosEspaciales
      * @param naves
-     * @return
+     * @return lista de portes extraidos del csv
      */
     public static ListaPortes leerPortesCsv(String fichero, int capacidad, ListaPuertosEspaciales puertosEspaciales, ListaNaves naves) {
         ListaPortes listaPortes = new ListaPortes(capacidad);
