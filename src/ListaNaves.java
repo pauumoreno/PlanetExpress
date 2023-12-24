@@ -100,18 +100,13 @@ public class ListaNaves {
      */
     public Nave seleccionarNave(Scanner teclado, String mensaje, double alcance) {
         Nave nave = null;
-        boolean volver = true;
-        String buscar;
+        boolean volver = false;
+        String matricula;
         do {
             System.out.print(mensaje);
-            buscar = teclado.nextLine();
+            matricula = teclado.nextLine();
+            nave =  buscarNave(matricula);
 
-            for(int i = 0;i<getOcupacion();i++){
-                if(buscar.equals(getNave(i).getMatricula())) {
-                    nave = getNave(i);
-                    volver = false;
-                }
-            }
             if (nave == null) {
                 System.out.println("Matrícula de nave no encontrada.");
                 volver = true;

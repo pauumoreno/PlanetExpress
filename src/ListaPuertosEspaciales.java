@@ -79,7 +79,7 @@ public class ListaPuertosEspaciales {
      */
     public PuertoEspacial seleccionarPuertoEspacial(Scanner teclado, String mensaje) {
         PuertoEspacial puertoEspacial = null;
-        String codigo = null;
+        String codigo;
         boolean correcto = false;
         do {
             codigo = Utilidades.leerCadena(teclado, mensaje);
@@ -89,6 +89,8 @@ public class ListaPuertosEspaciales {
                     correcto = true;
                 }
             }
+            if(puertoEspacial==null)
+                System.out.println("Código de puerto no encontrado. ");
         } while (!correcto);
         return puertoEspacial;
     }
