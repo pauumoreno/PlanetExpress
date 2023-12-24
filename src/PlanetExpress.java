@@ -278,13 +278,22 @@ public class PlanetExpress {
                                 System.out.println("Envio cancelado");
 
                             }else if(letra =='f'){
+
                                 String fichero = Utilidades.leerCadena(teclado,"Nombre del fichero: ");
                                 envio.generarFactura(fichero);
                                 if(envio.generarFactura(fichero))
                                 System.out.println("Factura generada correctamente");
                             }
+
                         }while(letra!='c'&& letra!='f');
+
+
+
+
+
                         }
+
+
 
                         break;
                     case 5:     // TODO: Lista de envíos de un porte
