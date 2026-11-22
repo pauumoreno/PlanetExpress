@@ -2,14 +2,20 @@
 
 ## Overview
 
-PlanetExpress is an academic Java application developed
-individually as part of my Software Engineering degree
-at Universidad Politécnica de Madrid (UPM).
+PlanetExpress is a console-based Java application
+developed individually as part of my Software
+Engineering degree at Universidad Politécnica
+de Madrid (UPM).
 
-The application simulates a space transportation 
-management system, applying object-oriented programming
-principles to manage customers, spacecraft, spaceports,
-bookings and shipments.
+The application simulates a space transportation
+management system using object-oriented programming.
+
+Users interact with the application through a
+command-line interface (CLI) to manage customers,
+spacecraft, spaceports, bookings and shipments.
+
+The project runs locally using IntelliJ IDEA and
+does not require a web interface.
 
 ## Main Features
 
